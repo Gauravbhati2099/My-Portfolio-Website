@@ -4,7 +4,7 @@ import { Mail, Linkedin, Github, Award } from "lucide-react";
 import "./index.css";
 
 export default function App() {
-  const [theme, setTheme] = useState("day");
+  const [theme, setTheme] = useState("night");
   const [menuOpen, setMenuOpen] = useState(false);
 
 const projects = [
