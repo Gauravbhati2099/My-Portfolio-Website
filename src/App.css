@@ -1,20 +1,23 @@
 /* View More Button Styling */
 .view-more-btn {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 2rem auto 0 auto;
   padding: 0.75em 2em;
   font-size: 1.1rem;
   font-weight: 600;
   border-radius: 2em;
-  background: var(--btn-bg, #646cff);
-  color: #fff;
-  border: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  background: transparent;
+  color: var(--btn-bg, #646cff);
+  border: 2px solid var(--btn-bg, #646cff);
+  box-shadow: none;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s;
 }
 .view-more-btn:hover {
-  background: var(--btn-hover-bg, #535bf2);
+  background: var(--btn-bg, #646cff20);
+  color: var(--btn-hover-bg, #535bf2);
 }
 /* Section Headings Styling */
 .section-heading {
