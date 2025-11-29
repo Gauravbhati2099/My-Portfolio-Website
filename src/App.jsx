@@ -5,6 +5,7 @@ import "./index.css";
 
 export default function App() {
   const [theme, setTheme] = useState("night");
+  const [showAllProjects, setShowAllProjects] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
 const projects = [
@@ -89,9 +90,9 @@ const projects = [
 
       {/* Projects */}
       <section id="projects" className="section">
-          <h2 className="section-heading">Projects</h2>
+        <h2 className="section-heading">Projects</h2>
         <div className="cards-grid">
-          {projects.map((p, i) => (
+          {(showAllProjects ? projects : projects.slice(0, 6)).map((p, i) => (
             <motion.div key={i} whileHover={{ scale: 1.05, y: -8 }} className="card">
               <div className="card-image"><img src={p.img} alt={p.title} /></div>
               <div className="card-title"><h5>{p.title}</h5></div>
@@ -102,7 +103,16 @@ const projects = [
             </motion.div>
           ))}
         </div>
-      
+        {!showAllProjects && projects.length > 6 && (
+          <button className="btn view-more-btn" onClick={() => setShowAllProjects(true)}>
+            View More
+          </button>
+        )}
+        {showAllProjects && (
+          <button className="btn view-more-btn" onClick={() => setShowAllProjects(false)}>
+            View Less
+          </button>
+        )}
       </section>
 
       {/* Certificates */}

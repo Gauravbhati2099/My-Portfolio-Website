@@ -1,3 +1,21 @@
+/* View More Button Styling */
+.view-more-btn {
+  display: block;
+  margin: 2rem auto 0 auto;
+  padding: 0.75em 2em;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 2em;
+  background: var(--btn-bg, #646cff);
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.view-more-btn:hover {
+  background: var(--btn-hover-bg, #535bf2);
+}
 /* Section Headings Styling */
 .section-heading {
   font-size: 2.5rem;
