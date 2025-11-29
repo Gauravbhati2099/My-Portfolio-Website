@@ -89,7 +89,7 @@ const projects = [
 
       {/* Projects */}
       <section id="projects" className="section">
-        <h2>Projects</h2>
+          <h2 className="section-heading">Projects</h2>
         <div className="cards-grid">
           {projects.map((p, i) => (
             <motion.div key={i} whileHover={{ scale: 1.05, y: -8 }} className="card">
@@ -107,7 +107,7 @@ const projects = [
 
       {/* Certificates */}
       <section id="certificates" className="section">
-        <h2>Certificates</h2>
+          <h2 className="section-heading">Certificates</h2>
         <div className="cards-grid">
           {certificates.map((c, i) => (
             <motion.div key={i} whileHover={{ scale: 1.05, y: -8 }} className="cert-card">
@@ -120,7 +120,7 @@ const projects = [
 
       {/* Skills */}
       <section id="skills" className="section">
-        <h2>Skills</h2>
+          <h2 className="section-heading">Skills</h2>
         <ul>
           <li><strong>Languages:</strong> Python, C++, SQL, NoSQL (MongoDB, PostgreSQL)</li>
           <li><strong>Frameworks & Tools:</strong> TensorFlow, PyTorch, Flask, Django, React, Node.js, Streamlit</li>
