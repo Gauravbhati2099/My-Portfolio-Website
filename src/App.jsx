@@ -8,14 +8,14 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const projects = [
-    { title: "Customer Churn Analytics Dashboard", img: "/projects/churn.jpg", desc: "SQL + Power BI pipeline analyzing telecom churn drivers.", link: "https://github.com/Gauravbhati2099/Customer-churn-data.git" },
-    { title: "YouTube Trending Insights Analyzer", img: "/projects/youtube.jpg", desc: "API + web scraping with BeautifulSoup & SQL analysis.", link: "https://github.com/Gauravbhati2099/Youtube-trend-Analysis.git" },
-    { title: "Retail Sales Forecasting", img: "/projects/retail.jpg", desc: "Time-series forecasting & dashboards for inventory planning.", link: "https://github.com/Gauravbhati2099/Retail-Sales-forcasting.git" },
-    { title: "Healthcare Resource Utilization", img: "/projects/healthcare.jpg", desc: "SQL + Power BI analysis of hospital occupancy and wait times.", link: "https://github.com/Gauravbhati2099/Healthcare-Resource-Utilization.git" },
-    { title: "Sentiment Analysis Platform", img: "/projects/sentiment.jpg", desc: "Full-stack web app analyzing YouTube comments with ML pipeline.", link: "https://github.com/Gauravbhati2099/Sentiant.git" },
-    { title: "Diabetes Prediction Model", img: "/projects/diabetes.jpg", desc: "Logistic regression with real-time Streamlit predictions.", link: "https://github.com/Gauravbhati2099/IBM-skillbuild.git" },
-    { title: "Anomaly Detection System", img: "/projects/anomaly.jpg", desc: "Power consumption anomaly detection using ML techniques.", link: "https://github.com/Gauravbhati2099/Anomly-detection.git" },
-    { title: "Product Store (E-commerce)", img: "/projects/MainPage.jpg", desc: "MERN stack store with analytics & Google Authentication.", link: "https://github.com/Gauravbhati2099/ProductStore.git" },
+    { title: "Customer Churn Analytics Dashboard", img: "/projects/churn.jpg", desc: "SQL + Power BI pipeline analyzing telecom churn drivers.", link: "https://github.com/Gauravbhati2099" },
+    { title: "YouTube Trending Insights Analyzer", img: "/projects/youtube.jpg", desc: "API + web scraping with BeautifulSoup & SQL analysis.", link: "https://github.com/Gauravbhati2099" },
+    { title: "Retail Sales Forecasting", img: "/projects/retail.jpg", desc: "Time-series forecasting & dashboards for inventory planning.", link: "https://github.com/Gauravbhati2099" },
+    { title: "Healthcare Resource Utilization", img: "/projects/healthcare.jpg", desc: "SQL + Power BI analysis of hospital occupancy and wait times.", link: "https://github.com/Gauravbhati2099" },
+    { title: "Sentiment Analysis Platform", img: "/projects/sentiment.jpg", desc: "Full-stack web app analyzing YouTube comments with ML pipeline.", link: "https://github.com/Gauravbhati2099" },
+    { title: "Diabetes Prediction Model", img: "/projects/diabetes.jpg", desc: "Logistic regression with real-time Streamlit predictions.", link: "https://github.com/Gauravbhati2099" },
+    { title: "Anomaly Detection System", img: "/projects/anomaly.jpg", desc: "Power consumption anomaly detection using ML techniques.", link: "https://github.com/Gauravbhati2099" },
+    { title: "Product Store (E-commerce)", img: "/projects/MainPage.jpg", desc: "MERN stack store with analytics & Google Authentication.", link: "https://github.com/Gauravbhati2099" },
   ];
 
   const certificates = [
