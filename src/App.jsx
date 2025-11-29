@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Linkedin, Github, Award } from "lucide-react";
-import "./index.css";
+import "./app.css";
 
 export default function App() {
   const [theme, setTheme] = useState("night");
