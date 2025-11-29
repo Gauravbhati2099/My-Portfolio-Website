@@ -7,23 +7,31 @@ export default function App() {
   const [theme, setTheme] = useState("day");
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const projects = [
-    { title: "Customer Churn Analytics Dashboard", img: "/projects/churn.jpg", desc: "SQL + Power BI pipeline analyzing telecom churn drivers.", link: "https://github.com/Gauravbhati2099" },
-    { title: "YouTube Trending Insights Analyzer", img: "/projects/youtube.jpg", desc: "API + web scraping with BeautifulSoup & SQL analysis.", link: "https://github.com/Gauravbhati2099" },
-    { title: "Retail Sales Forecasting", img: "/projects/retail.jpg", desc: "Time-series forecasting & dashboards for inventory planning.", link: "https://github.com/Gauravbhati2099" },
-    { title: "Healthcare Resource Utilization", img: "/projects/healthcare.jpg", desc: "SQL + Power BI analysis of hospital occupancy and wait times.", link: "https://github.com/Gauravbhati2099" },
-    { title: "Sentiment Analysis Platform", img: "/projects/sentiment.jpg", desc: "Full-stack web app analyzing YouTube comments with ML pipeline.", link: "https://github.com/Gauravbhati2099" },
-    { title: "Diabetes Prediction Model", img: "/projects/diabetes.jpg", desc: "Logistic regression with real-time Streamlit predictions.", link: "https://github.com/Gauravbhati2099" },
-    { title: "Anomaly Detection System", img: "/projects/anomaly.jpg", desc: "Power consumption anomaly detection using ML techniques.", link: "https://github.com/Gauravbhati2099" },
-    { title: "Product Store (E-commerce)", img: "/projects/MainPage.jpg", desc: "MERN stack store with analytics & Google Authentication.", link: "https://github.com/Gauravbhati2099" },
-  ];
+const projects = [
+  { title: "My Portfolio Website", img: "/projects/portfolio.jpg", desc: "Portfolio built using Vite.js and basic CSS.", link: "https://github.com/Gauravbhati2099/My-Portfolio-Website" },
+  { title: "YouTube to Spotify Converter", img: "/projects/ytspotify.jpg", desc: "Python automation converting YouTube playlists to Spotify.", link: "https://github.com/Gauravbhati2099/YouTube-to-Soptify" },
+  { title: "Automation Scripting", img: "/projects/automation.jpg", desc: "Python automation scripts handling routine workflows.", link: "https://github.com/Gauravbhati2099/Automation-Scripting" },
+  { title: "Anomaly Detection Model", img: "/projects/anomaly2.jpg", desc: "Jupyter-based anomaly detection machine learning workflow.", link: "https://github.com/Gauravbhati2099/Anomaly-detection-model" },
+  { title: "Walmart Sales Forecasting", img: "/projects/walmart.jpg", desc: "Time-series forecasting project for Walmart sales.", link: "https://github.com/Gauravbhati2099/walmart-sales-forecasting" },
+  { title: "Customer Churn Data Exploration", img: "/projects/churn2.jpg", desc: "Jupyter Notebook analysis of churn datasets.", link: "https://github.com/Gauravbhati2099/Customer-churn-data" },
+  { title: "Sentient Analysis Platform", img: "/projects/sentient.jpg", desc: "Python-based sentiment analysis implementation.", link: "https://github.com/Gauravbhati2099/Sentiant-Analysis-Platform" },
+  { title: "Healthcare Resource Utilization (Notebook)", img: "/projects/healthcare2.jpg", desc: "Notebook version of healthcare analytics project.", link: "https://github.com/Gauravbhati2099/Healthcare-Resource-Utilization" },
+  { title: "YouTube Trend Analysis", img: "/projects/ytrend.jpg", desc: "Data analysis of YouTube trending videos.", link: "https://github.com/Gauravbhati2099/Youtube-trend-Analysis" },
+  { title: "E-commerce Website", img: "/projects/ecommerce.jpg", desc: "JavaScript-based e-commerce application UI.", link: "https://github.com/Gauravbhati2099/Ecommerce-website" },
+  { title: "Modern ATM Simulator", img: "/projects/atm.jpg", desc: "Java-based ATM simulation system.", link: "https://github.com/Gauravbhati2099/Modern-ATM-Simulator" },
+  { title: "Emotion Detection ChatBot", img: "/projects/emotionbot.jpg", desc: "Python chatbot detecting user emotions via ML.", link: "https://github.com/Gauravbhati2099/Emotion-detection-ChatBot" },
+  { title: "Diabetes Prediction Platform", img: "/projects/diabetes2.jpg", desc: "IBM SkillBuild ML project predicting diabetes from structured data.", link: "https://github.com/Gauravbhati2099/Diabetes-Prediction-platfrom" }
+];
+
 
   const certificates = [
     { title: "Google Data Analytics Specialization", link: "https://www.coursera.org/account/accomplishments/professional-cert/certificate/3T9XI52JL5QU" },
     { title: "Machine Learning Specialization (DeepLearning.AI)", link: "https://www.coursera.org/account/accomplishments/specialization/certificate/A3N616TXM8JY" },
     { title: "Python Developer Specialization (Microsoft)", link: "https://www.coursera.org/account/accomplishments/professional-cert/certificate/90NVYBG6ZEGJ" },
     { title: "MongoDB Developer's Toolkit: CRUD Mastery with Python", link: "https://www.geeksforgeeks.org/certificate/7a3113d2da8d3d1d2e82771ed7219a5e?utm_source=socials&utm_medium=cc_link" },
-    { title: "Career Essentials in Data Analysis (Microsoft and LinkedIn)", link: "" },
+    { title: "45 Day training by Grass Solutions", link: "https://certificate.grras.com/verify/c7d09ee918577?s=true" },
+    { title: "Career Essentials in Data Analysis by Microsoft and LinkedIn", link: "https://www.linkedin.com/learning/certificates/d1af1c440690f2d4e2903da59c32130677e12357642fb2e35896441f98aad830" },
+    { title: "Data Analysis with Python", link: "https://freecodecamp.org/certification/Gauravbhati2099/data-analysis-with-python-v7" },
   ];
 
   return (
