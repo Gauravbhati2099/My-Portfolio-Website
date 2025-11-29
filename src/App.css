@@ -1,34 +1,41 @@
-/* View More Button Styling */
-.view-more-btn {
+.view-more-btn-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 2rem auto 0 auto;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+/* View More Button Styling */
+.view-more-btn {
   padding: 0.75em 2em;
   font-size: 1.1rem;
   font-weight: 600;
   border-radius: 2em;
-  background: transparent;
+  background: rgba(255,255,255,0.08);
   color: var(--btn-bg, #646cff);
-  border: 2px solid var(--btn-bg, #646cff);
-  box-shadow: none;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 0;
+  position: relative;
+  min-height: 520px;
 }
-.view-more-btn:hover {
-  background: var(--btn-bg, #646cff20);
+  background: rgba(100,108,255,0.15);
   color: var(--btn-hover-bg, #535bf2);
 }
 /* Section Headings Styling */
 .section-heading {
   font-size: 2.5rem;
-  text-align: center;
-  margin-bottom: 1.5rem;
-  font-weight: 700;
+.view-more-btn-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 0;
+  margin-bottom: 2rem;
+  min-height: 60px;
 }
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }

@@ -103,16 +103,18 @@ const projects = [
             </motion.div>
           ))}
         </div>
-        {!showAllProjects && projects.length > 6 && (
-          <button className="btn view-more-btn" onClick={() => setShowAllProjects(true)}>
-            View More
-          </button>
-        )}
-        {showAllProjects && (
-          <button className="btn view-more-btn" onClick={() => setShowAllProjects(false)}>
-            View Less
-          </button>
-        )}
+        <div className="view-more-btn-wrapper">
+          {!showAllProjects && projects.length > 6 && (
+            <button className="btn view-more-btn" onClick={() => setShowAllProjects(true)}>
+              View More
+            </button>
+          )}
+          {showAllProjects && (
+            <button className="btn view-more-btn" onClick={() => setShowAllProjects(false)}>
+              View Less
+            </button>
+          )}
+        </div>
       </section>
 
       {/* Certificates */}
