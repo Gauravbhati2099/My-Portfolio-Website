@@ -39,130 +39,201 @@ const STACK = [
   "OpenTelemetry",
   "RAG",
   "LLMs",
+  "Diffusers",
+  "Stable Diffusion",
   "Docker",
-  "Celery",
-  "OpenAI",
-  "WebSockets",
-  "Distributed Systems",
+  "REST APIs",
+  "Pydantic",
 ];
 
 const EXPERIENCE = [
   {
     id: "tech-adaptive",
     company: "Tech Adaptive",
-    role: "AI & Backend Engineer",
-    period: "2024 – Present",
+    role: "AI Research Intern",
+    period: "Dec 2025 – Feb 2026",
     type: "Internship",
     bullets: [
-      "Architected multi-agent customer support platform handling 10k+ queries per day",
-      "Built LangGraph planner with persistent memory stored in MongoDB",
-      "Implemented OpenTelemetry distributed tracing across all microservices",
-      "Reduced average response latency by 60% via Redis caching strategy",
+      "Designed evaluation workflows for LLM and machine learning systems.",
+      "Performed structured experimentation, edge-case testing, and failure-mode analysis.",
+      "Documented model behavior and research findings to support AI development."
     ],
     tech: ["FastAPI", "LangGraph", "MongoDB", "Redis", "OpenTelemetry", "OpenAI"],
-    highlight: "60% latency reduction in production",
+    highlight: "LLM evaluation & experimentation"
   },
   {
     id: "onepws",
     company: "ONEPWS",
-    role: "Backend Engineer",
-    period: "2023 – 2024",
+    role: "AI Engineer Intern",
+    period: "Jun 2026 – Present",
     type: "Part-time",
     bullets: [
-      "Developed RESTful APIs serving mobile and web clients at scale",
-      "Designed PostgreSQL schemas for multi-tenant SaaS architecture",
-      "Built automated webhook processing pipeline for payment integrations",
-      "Implemented JWT authentication, rate limiting, and middleware stack",
+      "Architected an AI-powered customer support platform spanning conversational AI, memory management, and document workflows.",
+      "Built a modular LangGraph workflow with asynchronous workers for memory extraction, auditing, and background processing.",
+      "Designed a schema-aware natural language MongoDB query engine with runtime schema discovery.",
+      "Reduced query planning latency from ~30 seconds to under 5 seconds.",
+      "Optimized repeated memory retrieval from ~2.3 seconds to under 100 milliseconds through caching.",
     ],
-    tech: ["FastAPI", "PostgreSQL", "Redis", "Docker", "Stripe API"],
-    highlight: "0 → production in 3 months",
-  },
-  {
-    id: "projects",
-    company: "Independent Research",
-    role: "AI Systems Builder",
-    period: "2022 – Present",
-    type: "Open Source",
-    bullets: [
-      "Building production-grade AI applications with measurable real-world metrics",
-      "Researching memory architectures for long-context agent workflows",
-      "Exploring advanced RAG pipelines for enterprise knowledge retrieval",
-      "Contributing open-source tooling to the LangGraph ecosystem",
-    ],
-    tech: ["Python", "LangGraph", "OpenAI", "MongoDB", "Next.js", "ChromaDB"],
-    highlight: "5+ production AI systems shipped",
-  },
+    tech: ["Python", "FastAPI", "LangGraph", "MongoDB", "Redis", "OpenTelemetry"],
+    highlight: "Designed AI workflow architecture & memory systems",
+  }
 ];
-
 const PROJECTS = [
   {
     id: "customer-support",
     title: "Intelligent Customer Support Platform",
-    tagline: "Multi-agent LLM orchestration at production scale",
+    tagline: "Workflow-driven AI assistant with long-term memory",
+
     description:
-      "Autonomous support platform using a LangGraph planner that routes queries to specialized sub-agents — billing, technical, and general — each with tool access and session memory. Built for reliability under high concurrency.",
+      "An AI-powered customer support platform combining conversational AI, workflow orchestration, persistent memory, document processing, and natural-language data access. Built with a modular LangGraph architecture to support scalable business workflows.",
+
     problem:
-      "Enterprise support teams overwhelmed by repetitive queries with no intelligent routing or context retention across sessions.",
+      "Businesses often rely on disconnected tools for customer support, document retrieval, and internal knowledge, making it difficult to provide contextual and efficient assistance.",
+
     solution:
-      "Hierarchical multi-agent architecture: planner classifies intent, sub-agents resolve with tool access, Redis holds session memory, MongoDB persists history.",
-    tech: ["FastAPI", "LangGraph", "MongoDB", "Redis", "OpenTelemetry", "OpenAI GPT-4"],
-    metrics: ["10k+ queries/day", "60% latency reduction", "94% auto-resolution"],
+      "Designed a modular LangGraph workflow coordinating planning, authorization, memory retrieval, document processing, and specialized business workflows through reusable AI components.",
+
+    tech: [
+      "Python",
+      "FastAPI",
+      "LangGraph",
+      "MongoDB",
+      "Redis",
+      "OpenTelemetry",
+    ],
+
+    metrics: [
+      "5+ business workflows",
+      "6+ asynchronous worker services",
+      "8-stage memory lifecycle",
+    ],
+
     category: "AI Systems",
   },
+
   {
     id: "image-gen",
     title: "AI Image Generation Platform",
-    tagline: "Scalable async image pipeline with multi-model support",
+    tagline: "Collaborative multi-user AI image generation",
+
     description:
-      "Production backend for image generation with Celery task queues, Redis broker, and an abstraction layer across multiple diffusion model providers. Includes prompt optimization, safety filtering, and webhook delivery.",
+      "A collaborative image generation platform supporting authenticated users, prompt history, persistent image storage, and asynchronous image generation using Stable Diffusion models.",
+
     problem:
-      "SaaS image APIs are expensive at scale; self-hosting without proper async infrastructure is fragile.",
+      "AI image generation tools often lack user management, persistent history, and collaborative workflows needed for small teams and organizations.",
+
     solution:
-      "Model-agnostic backend with async job processing, webhook callbacks, per-model rate limiting, and a unified API surface.",
-    tech: ["FastAPI", "Celery", "Redis", "PostgreSQL", "Docker", "Stable Diffusion"],
-    metrics: ["<3s generation", "99.2% uptime", "4 model providers"],
-    category: "AI Platform",
+      "Developed a FastAPI backend integrating Stable Diffusion through Hugging Face Diffusers with authentication, persistent storage, prompt management, and asynchronous image generation.",
+
+    tech: [
+      "Python",
+      "FastAPI",
+      "Diffusers",
+      "Stable Diffusion",
+      "REST APIs",
+    ],
+
+    metrics: [
+      "Authenticated users",
+      "Persistent image history",
+      "Asynchronous generation",
+    ],
+
+    category: "AI Applications",
   },
+
   {
     id: "rag-assistant",
     title: "RAG Policy Assistant",
-    tagline: "Retrieval-augmented QA with full source attribution",
+    tagline: "Local Retrieval-Augmented Generation with source attribution",
+
     description:
-      "Enterprise RAG pipeline: ingest policy documents → chunk → embed → hybrid vector search → re-rank → LLM synthesis with citations. Built for auditable, accurate responses over large document corpora.",
+      "A fully local Retrieval-Augmented Generation system supporting semantic search across multiple document formats with citation-backed responses and OCR support.",
+
     problem:
-      "Thousands of policy documents with no efficient semantic search for non-technical staff.",
+      "Traditional keyword search struggles to retrieve relevant information from large collections of policy and technical documents.",
+
     solution:
-      "Chunked ingestion, dense + BM25 hybrid retrieval, cross-encoder re-ranking, and GPT-4 synthesis with source attribution.",
-    tech: ["LangChain", "ChromaDB", "FastAPI", "OpenAI", "PostgreSQL"],
-    metrics: ["85% retrieval accuracy", "<2s response", "Source-cited answers"],
-    category: "RAG",
+      "Implemented a semantic retrieval pipeline combining document parsing, embeddings, vector search, and citation-aware response generation using local language models.",
+
+    tech: [
+      "Python",
+      "FastAPI",
+      "LangChain",
+      "FAISS",
+      "Ollama",
+      "OCR",
+    ],
+
+    metrics: [
+      "4 supported document formats",
+      "Semantic vector search",
+      "Citation-backed responses",
+    ],
+
+    category: "Retrieval-Augmented Generation",
   },
+
   {
     id: "nl-mongo",
     title: "Natural Language MongoDB Query Engine",
-    tagline: "English → MongoDB aggregation pipeline, safely executed",
+    tagline: "Natural language to MongoDB query translation",
+
     description:
-      "Schema-aware LLM prompting that translates natural language into valid MongoDB aggregation queries. Includes a validation layer and sandboxed execution before returning results to the caller.",
+      "A schema-aware AI query engine that converts natural-language requests into MongoDB aggregation pipelines with runtime schema discovery and query validation.",
+
     problem:
-      "Non-technical users need database insights but cannot write complex aggregation queries.",
+      "Business users need database insights without learning MongoDB query syntax or aggregation pipelines.",
+
     solution:
-      "Schema-grounded prompting generates queries, a validation step checks syntax and safety, then results are formatted for non-technical readers.",
-    tech: ["Python", "FastAPI", "MongoDB", "OpenAI", "LangChain"],
-    metrics: ["92% query accuracy", "Schema-aware generation", "Safe sandbox"],
-    category: "Tooling",
+      "Built a schema-aware planning pipeline that discovers database structure at runtime, generates validated MongoDB queries, and formats results into human-readable responses.",
+
+    tech: [
+      "Python",
+      "FastAPI",
+      "MongoDB",
+      "LangChain",
+      "LLMs",
+    ],
+
+    metrics: [
+      "Runtime schema discovery",
+      "Natural-language querying",
+      "Query validation before execution",
+    ],
+
+    category: "Developer Tools",
   },
+
   {
     id: "playlistai",
     title: "PlaylistAI",
-    tagline: "Natural language → curated Spotify playlists",
+    tagline: "Convert natural language into Spotify playlists",
+
     description:
-      "GPT-4 interprets mood and context prompts, maps them to Spotify audio feature targets, searches the catalog, and creates a perfectly curated playlist in one click. Full OAuth 2.0 flow included.",
+      "An AI-assisted playlist generation tool that interprets natural-language prompts, discovers relevant music, and automatically creates Spotify playlists using authenticated user accounts.",
+
     problem:
-      "Spotify's recommendation algorithm doesn't understand nuanced contextual listening moods described in natural language.",
+      "Music streaming platforms struggle to understand detailed natural-language descriptions of listening preferences and moods.",
+
     solution:
-      "LLM maps mood → audio attributes (energy, valence, tempo), searches Spotify's track library, and creates the playlist via API.",
-    tech: ["FastAPI", "OpenAI GPT-4", "Spotify API", "PostgreSQL", "OAuth 2.0"],
-    metrics: ["20-track curated playlists", "Mood-to-genre mapping", "1-click creation"],
+      "Combined natural-language understanding with Spotify APIs to translate user intent into curated playlists while managing authentication and playlist creation automatically.",
+
+    tech: [
+      "Python",
+      "Flask",
+      "Spotify API",
+      "YouTube Data API",
+      "Ollama",
+      "OAuth 2.0",
+    ],
+
+    metrics: [
+      "Cross-platform playlist generation",
+      "Natural-language prompt understanding",
+      "OAuth-secured user authentication",
+    ],
+
     category: "Consumer AI",
   },
 ];
@@ -172,16 +243,24 @@ const ARCH_FLOW = [
   { label: "FastAPI", sublabel: "Gateway + Auth", icon: Zap, layer: "Gateway", featured: true },
   { label: "Planner Agent", sublabel: "Query Router", icon: Cpu, layer: "Planning", featured: true },
   { label: "LangGraph", sublabel: "Agent Orchestration", icon: Layers, layer: "Orchestration", featured: true },
-  { label: "Memory + Store", sublabel: "Redis · MongoDB", icon: Database, layer: "Persistence" },
-  { label: "LLM", sublabel: "OpenAI GPT-4", icon: Cpu, layer: "Intelligence" },
+  { label: "Memory Service", sublabel: "Redis · MongoDB", icon: Database, layer: "Persistence" },
+  { label: "LLM", sublabel: "Cloud/Local Models", icon: Cpu, layer: "Intelligence" },
 ];
 
 const ARCH_STATS = [
-  { label: "Daily Queries", value: "10k+" },
-  { label: "Resolution Rate", value: "94%" },
-  { label: "Avg. Latency", value: "~800ms" },
+{
+label:"Business Workflows",
+value:"5+"
+},
+{
+label:"Async Workers",
+value:"6+"
+},
+{
+label:"Memory Lifecycle",
+value:"8 stages"
+}
 ];
-
 // ─── Utilities ───────────────────────────────────────────────────────────────
 
 function FadeIn({
@@ -426,7 +505,7 @@ function Hero() {
           className="text-5xl sm:text-7xl lg:text-[88px] font-bold tracking-tight leading-[0.93] mb-7"
           style={{ fontFamily: "Onest, sans-serif" }}
         >
-          Gaurav Singh
+          Gaurav Singh Bhati
           <br />
           <span className="text-foreground/30">Bhati</span>
         </motion.h1>
@@ -539,10 +618,10 @@ function About() {
                 architectural sense."
               </p>
               <p>
-                Currently building multi-agent platforms at Tech Adaptive, shipping
-                LangGraph-based orchestration systems that handle tens of thousands of
-                queries daily. I care deeply about observability, memory architecture,
-                and system design that survives contact with real users.
+                Currently building AI-powered backend systems at ONEPWS, 
+                focusing on workflow orchestration, long-term memory, 
+                natural-language database querying, 
+                and intelligent automation using FastAPI, LangGraph, and MongoDB.
               </p>
               <p>
                 Outside of work I explore RAG pipelines, long-context agent memory
@@ -1026,7 +1105,7 @@ function Contact() {
             </p>
             <div className="flex flex-col gap-4">
               {[
-                { icon: Mail, label: "gaurav@example.com", href: "mailto:gaurav@example.com" },
+                { icon: Mail, label: "gauravbhati2099@gmail.com", href: "mailto:gauravbhati2099@gmail.com" },
                 { icon: Linkedin, label: "linkedin.com/in/gauravbhati2099", href: "https://linkedin.com/in/gauravbhati2099" },
                 { icon: Github, label: "github.com/gauravbhati2099", href: "https://github.com/gauravbhati2099" },
               ].map(({ icon: Icon, label, href }) => (
@@ -1134,13 +1213,13 @@ function Footer() {
           className="text-xs text-muted-foreground/50"
           style={{ fontFamily: "JetBrains Mono, monospace" }}
         >
-          © 2025 Gaurav Singh Bhati
+          © 2026 Gaurav Singh Bhati
         </span>
         <div className="flex items-center gap-5">
           {[
             { icon: Github, href: "https://github.com/gauravbhati2099" },
             { icon: Linkedin, href: "https://linkedin.com/in/gauravbhati2099" },
-            { icon: Mail, href: "mailto:gaurav@example.com" },
+            { icon: Mail, href: "mailto:gauravbhati2099@gmail.com" },
           ].map(({ icon: Icon, href }) => (
             <a
               key={href}
