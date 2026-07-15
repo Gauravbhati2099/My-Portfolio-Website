@@ -701,7 +701,7 @@ function About() {
 // ─── Experience ──────────────────────────────────────────────────────────────
 
 function Experience() {
-  const [active, setActive] = useState("tech-adaptive");
+  const [active, setActive] = useState(EXPERIENCE[0].id);
   const current = EXPERIENCE.find((e) => e.id === active)!;
 
   return (
