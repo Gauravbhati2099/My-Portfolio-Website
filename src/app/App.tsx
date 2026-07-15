@@ -48,6 +48,52 @@ const STACK = [
 
 const EXPERIENCE = [
   {
+    id: "tempsens",
+    company: "Tempsens Instruments",
+    role: "IT Intern",
+    period: "Jul 2026 – Present",
+    type: "Full-time Internship",
+    bullets: [
+      "Developing and enhancing enterprise applications using Microsoft Power Platform.",
+      "Creating Power Apps, Power Automate workflows, and internal business solutions.",
+      "Preparing user manuals, technical documentation, and process guides for enterprise systems.",
+      "Testing, debugging, and improving Gate Management, SRM, SCM, and related business applications.",
+      "Collaborating with business stakeholders and third-party vendors to gather requirements and suggest product improvements."
+    ],
+    tech: [
+      "Power Apps",
+      "Power Automate",
+      "Microsoft 365",
+      "SharePoint",
+      "SAP",
+      "SQL"
+    ],
+    highlight: "Enterprise application development & process automation"
+  },
+  {
+    id: "onepws",
+    company: "ONEPWS",
+    role: "AI Engineer Intern",
+    period: "Jun 2026 – Jul 2026",
+    type: "Internship",
+    bullets: [
+      "Architected an AI-powered customer support platform with conversational AI, long-term memory, and document workflows.",
+      "Built modular LangGraph pipelines with asynchronous background workers for memory extraction and auditing.",
+      "Designed a schema-aware natural language MongoDB query engine with runtime schema discovery.",
+      "Reduced query planning latency from approximately 30 seconds to under 5 seconds.",
+      "Optimized memory retrieval from approximately 2.3 seconds to under 100 milliseconds using Redis caching."
+    ],
+    tech: [
+      "Python",
+      "FastAPI",
+      "LangGraph",
+      "MongoDB",
+      "Redis",
+      "OpenTelemetry"
+    ],
+    highlight: "AI workflow architecture & memory systems"
+  },
+  {
     id: "tech-adaptive",
     company: "Tech Adaptive",
     role: "AI Research Intern",
@@ -58,26 +104,17 @@ const EXPERIENCE = [
       "Performed structured experimentation, edge-case testing, and failure-mode analysis.",
       "Documented model behavior and research findings to support AI development."
     ],
-    tech: ["FastAPI", "LangGraph", "MongoDB", "Redis", "OpenTelemetry", "OpenAI"],
-    highlight: "LLM evaluation & experimentation"
-  },
-  {
-    id: "onepws",
-    company: "ONEPWS",
-    role: "AI Engineer Intern",
-    period: "Jun 2026 – Present",
-    type: "Part-time",
-    bullets: [
-      "Architected an AI-powered customer support platform spanning conversational AI, memory management, and document workflows.",
-      "Built a modular LangGraph workflow with asynchronous workers for memory extraction, auditing, and background processing.",
-      "Designed a schema-aware natural language MongoDB query engine with runtime schema discovery.",
-      "Reduced query planning latency from ~30 seconds to under 5 seconds.",
-      "Optimized repeated memory retrieval from ~2.3 seconds to under 100 milliseconds through caching.",
+    tech: [
+      "FastAPI",
+      "LangGraph",
+      "MongoDB",
+      "Redis",
+      "OpenAI"
     ],
-    tech: ["Python", "FastAPI", "LangGraph", "MongoDB", "Redis", "OpenTelemetry"],
-    highlight: "Designed AI workflow architecture & memory systems",
+    highlight: "LLM evaluation & experimentation"
   }
 ];
+
 const PROJECTS = [
   {
     id: "customer-support",
