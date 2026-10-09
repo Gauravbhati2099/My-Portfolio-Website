@@ -1,3 +1,261 @@
 @import './fonts.css';
 @import './tailwind.css';
 @import './theme.css';
+
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+body { min-width: 320px; background-color: #101827; background-image: radial-gradient(ellipse at 10% 16%, rgba(255, 191, 71, .11), transparent 27%), radial-gradient(ellipse at 91% 37%, rgba(54, 190, 224, .1), transparent 29%), radial-gradient(ellipse at 45% 76%, rgba(83, 176, 102, .12), transparent 32%), radial-gradient(ellipse at 13% 95%, rgba(241, 139, 69, .065), transparent 26%), radial-gradient(ellipse at 86% 88%, rgba(72, 155, 91, .09), transparent 30%); }
+html { scrollbar-color: #54865d #101827; scrollbar-width: thin; }
+* { scrollbar-width: thin; scrollbar-color: #54865d #101827; }
+*::-webkit-scrollbar { width: 12px; height: 12px; }
+*::-webkit-scrollbar-track { background: #101827; }
+*::-webkit-scrollbar-thumb { border: 3px solid #101827; border-radius: 999px; background: linear-gradient(180deg, #eac45c, #72ad73 58%, #45aeba); }
+*::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #ffdc7a, #8ad58b 58%, #69d5df); }
+*::-webkit-scrollbar-corner { background: #101827; }
+::selection { color: #152034; background: #ffd76b; }
+.skip-link { position: fixed; z-index: 100; top: .75rem; left: .75rem; transform: translateY(-160%); padding: .75rem 1rem; border-radius: 999px; color: #152034; background: #ffd76b; font-weight: 700; }
+.skip-link:focus { transform: translateY(0); }
+.site-tooltip { position: fixed; z-index: 1000; max-width: min(18rem,calc(100vw - 1.5rem)); padding: .5rem .7rem; border: 1px solid rgba(255,224,138,.36); border-radius: .65rem; color: #192538; background: linear-gradient(145deg,#fff6d5,#ffe39a); box-shadow: 0 8px 24px rgba(3,10,20,.34); font: 700 .75rem/1.35 "DM Sans",system-ui,sans-serif; text-align: center; text-wrap: pretty; pointer-events: none; transform: translate(-50%,-100%); }
+.site-tooltip-below { transform: translate(-50%,0); }
+:where(a,button,input,textarea,select,[tabindex]):focus-visible { outline: 2px solid #ffe28a; outline-offset: 3px; }
+.site-header nav button { min-width: 44px; min-height: 44px; }
+.hero-art { background-image: radial-gradient(ellipse at 76% 44%, rgba(255, 188, 66, .2), transparent 27%), radial-gradient(ellipse at 56% 82%, rgba(49, 186, 208, .12), transparent 30%), linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: auto, auto, 84px 84px, 84px 84px; mask-image: linear-gradient(to bottom, black 15%, rgba(0,0,0,.65) 60%, transparent 98%); }
+.section-heading { line-height: 1.2; padding-bottom: .08em; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+.game-frame { background: linear-gradient(135deg, rgba(67,49,126,.42), rgba(13,18,35,.97) 48%, rgba(8,74,84,.35)); box-shadow: 0 26px 90px rgba(30,20,60,.35), inset 0 1px rgba(255,255,255,.09); }
+.game-hud { background: linear-gradient(90deg, #20294b, #313762 52%, #20294b); border: 1px solid rgba(255,255,255,.12); box-shadow: inset 0 1px rgba(255,255,255,.1); }
+.game-live-dot { width: 9px; height: 9px; border-radius: 50%; background: #77e48e; box-shadow: 0 0 12px rgba(119,228,142,.9); }
+.game-screen { background: #398fd9; box-shadow: inset 0 0 0 2px rgba(255,255,255,.2), 0 12px 24px rgba(4,8,20,.3); }
+.game-canvas { background: linear-gradient(#3689dc 0%, #82cef4 59%, #ffe0a0 78%, #8e482f 78%); image-rendering: pixelated; }
+.game-start-overlay { background: linear-gradient(180deg, rgba(22,37,74,.08), rgba(15,24,50,.52)); }
+.game-start-kicker { color: #fff1ae; font: 700 .75rem/1.5 ui-monospace, monospace; letter-spacing: .18em; text-shadow: 0 2px 6px #17203a; }
+.game-overlay-label { color: #fff7de; text-shadow: 0 2px 12px #10102a; font: 800 clamp(1rem, 2.5vw, 1.35rem)/1.5 ui-monospace, monospace; letter-spacing: .04em; }
+.game-section { background-image: radial-gradient(ellipse at 50% 60%, rgba(99,102,241,.08), transparent 60%); }
+@media (max-width: 520px) { .game-frame { padding: .75rem; } .game-hud { padding: .6rem .7rem; } }
+@media (hover: hover) and (pointer: fine) { .hero-scene .greeting-character { transition: filter .2s ease; } }
+.hero-runner-stage { width: 250px; height: 220px; gap: 2px; border-radius: 50%; background: radial-gradient(circle, rgba(255,191,71,.13), rgba(45,171,194,.09) 48%, transparent 72%); filter: drop-shadow(0 20px 34px rgba(12,20,32,.42)); }
+.sunny-run-sprite, .sunny-gem-sprite { display: inline-block; flex: none; background-repeat: no-repeat; image-rendering: pixelated; }
+.hero-run-sprite { width: 99px; height: 96px; background-image: url('/game/sunnyland/Characters/Foxy/run/spritesheet.png'); background-size: 594px 96px; animation: sunny-run-hero .72s steps(6) infinite; }
+.hero-gem-sprite { width: 45px; height: 39px; background-image: url('/game/sunnyland/Misc/Sunnyland items/Spritesheets/gem.png'); background-size: 225px 39px; animation: sunny-gem-hero .8s steps(5) infinite, gem-hover 2.8s ease-in-out infinite; }
+@keyframes sunny-run-hero { to { background-position-x: -594px; } }
+@keyframes sunny-gem-hero { to { background-position-x: -225px; } }
+@keyframes gem-hover { 50% { translate: 0 -9px; } }
+button, a { -webkit-tap-highlight-color: transparent; }
+nav a, .game-section button, .game-section a { min-height: 44px; }
+.game-section button { cursor: pointer; }
+.section-artwork { position: absolute; z-index: 1; width: 190px; height: 150px; pointer-events: none; }
+.section-character-trigger { pointer-events: auto; cursor: pointer; border: 0; padding: 0; background-color: transparent; transition: translate .24s ease, rotate .24s ease, filter .24s ease; }
+.section-character-trigger:hover, .section-character-trigger:focus-visible { filter: drop-shadow(0 0 10px rgba(255,228,134,.72)); outline: none; }
+.section-character-trigger:focus-visible { box-shadow: 0 0 0 2px #ffe28a; border-radius: 8px; }
+.section-character-trigger.character-reaction-1 { translate: 0 -11px; rotate: -9deg; }
+.section-character-trigger.character-reaction-2 { translate: 0 -4px; rotate: 9deg; }
+.section-label { display: flex; width: max-content; align-items: center; gap: .55rem; }
+.section-label-gem { width: 15px; height: 13px; background-size: 75px 13px; filter: drop-shadow(0 1px 6px rgba(104,216,233,.5)); animation: sunny-gem-section 1.2s steps(5) infinite; }
+.section-label-spark { color: #a6e2a4; font-size: .72rem; opacity: .8; animation: artwork-mark-bob 2.8s ease-in-out infinite; }
+.inline-character-wrap { position: relative; display: inline-block; width: 32px; height: 31px; margin: 0 .15rem; vertical-align: -9px; }
+.inline-character-sprite { display: block; width: 32px; height: 30px; padding: 0; border: 0; background-color: transparent; background-repeat: no-repeat; image-rendering: pixelated; cursor: pointer; transition: filter .2s ease, translate .2s ease; }
+.inline-character-foxy .inline-character-sprite { background-image: url('/game/sunnyland/Characters/Foxy/run/spritesheet.png'); background-size: 198px 32px; animation: inline-foxy-run .95s steps(6) infinite; }
+.inline-character-frog .inline-character-sprite { background-image: url('/game/sunnyland/Characters/frog/Spritesheets/frog-idle.png'); background-size: 140px 32px; animation: inline-frog-idle 1.2s steps(4) infinite; }
+.inline-character-opossum .inline-character-sprite { width: 36px; background-image: url('/game/sunnyland/Characters/Opossum/spritesheet.png'); background-size: 216px 28px; animation: inline-opossum-walk 1.1s steps(6) infinite; }
+.inline-character-frog .inline-character-sprite, .inline-character-opossum .inline-character-sprite { transform: scaleX(-1); }
+.inline-character-sprite:hover, .inline-character-sprite:focus-visible { filter: drop-shadow(0 0 6px rgba(255,218,121,.8)); outline: none; }
+.inline-character-sprite:focus-visible { border-radius: 6px; box-shadow: 0 0 0 2px #ffe28a; }
+.inline-character-reacted { translate: 0 -5px; }
+.inline-character-bubble { position: absolute; z-index: 10; right: 0; top: calc(100% + 2px); padding: 3px 6px; border-radius: 8px 8px 8px 2px; color: #29364c; background: #ffefb9; box-shadow: 0 2px 6px rgba(5,12,22,.2); font: 800 .55rem/1.2 ui-rounded,system-ui,sans-serif; opacity: 0; pointer-events: none; transform: translateY(4px) scale(.9); transition: opacity .18s ease, transform .18s ease; white-space: nowrap; }
+.inline-character-wrap:hover .inline-character-bubble, .inline-character-sprite:focus-visible + .inline-character-bubble, .inline-character-bubble-open { opacity: 1; transform: translateY(0) scale(1); }
+.inline-character-bubble-open { animation: bubble-wave 2s ease-in-out infinite; }
+.section-artwork-right { top: 2rem; right: max(1.5rem, calc((100vw - 72rem) / 2 - 210px)); }
+.section-artwork-left { top: 3.6rem; left: max(1.5rem, calc((100vw - 72rem) / 2 - 210px)); scale: .92; rotate: -5deg; }
+.section-artwork-low-left { top: auto; bottom: 2.5rem; left: max(2rem, calc((100vw - 72rem) / 2 - 210px)); scale: 1.03; rotate: 4deg; }
+.section-artwork-low-right { top: auto; bottom: 2.25rem; right: max(2rem, calc((100vw - 72rem) / 2 - 210px)); scale: 1.02; rotate: -3deg; }
+.section-artwork-violet { --art-glow: rgba(255,171,74,.2); }
+.section-artwork-cyan { --art-glow: rgba(64,204,222,.22); }
+.section-artwork-amber { --art-glow: rgba(255,194,64,.22); }
+.section-artwork-halo { position: absolute; inset: 3px 2px 1px 2px; border-radius: 50%; background: radial-gradient(ellipse, var(--art-glow), transparent 70%); }
+.section-artwork-house { position: absolute; right: -8px; bottom: -4px; width: 88px; height: 78px; object-fit: contain; object-position: bottom right; image-rendering: pixelated; opacity: .96; filter: drop-shadow(0 8px 12px rgba(9,16,28,.64)); }
+.section-artwork-tree { position: absolute; z-index: 0; left: 12px; bottom: 1px; width: 70px; height: 72px; object-fit: contain; object-position: bottom; image-rendering: pixelated; opacity: .76; filter: drop-shadow(0 5px 8px rgba(9,16,28,.45)); }
+.section-artwork-ground { position: absolute; z-index: 1; right: 8px; bottom: 4px; left: 8px; height: 8px; border-top: 2px solid rgba(191,226,126,.84); border-radius: 50% 50% 4px 4px; background: repeating-linear-gradient(90deg,rgba(63,137,75,.9) 0 12px,rgba(102,171,82,.92) 12px 25px,rgba(72,149,78,.9) 25px 37px); box-shadow: 0 -2px 8px rgba(102,187,90,.2); }
+.section-artwork-cloud { position: absolute; top: 18px; right: 26px; width: 110px; height: 29px; background: url('/game/sunnyland/environment/Background/clouds-transparent.png') center / 110px 29px no-repeat; opacity: .92; filter: drop-shadow(0 4px 8px rgba(60,170,207,.15)); animation: cloud-drift 8s ease-in-out infinite; }
+.section-artwork-leaf { position: absolute; z-index: 1; bottom: 13px; left: 55px; width: 28px; height: 13px; border-radius: 100% 0 100% 0; background: linear-gradient(140deg, #b1ea8c, #42a967 78%); box-shadow: 0 2px 7px rgba(42,160,96,.24); transform: rotate(-28deg); }
+.section-artwork-leaf.leaf-two { left: 78px; bottom: 19px; width: 23px; height: 11px; background: linear-gradient(140deg, #d0ed93, #62b96b 78%); transform: rotate(25deg) scaleX(-1); }
+.section-artwork-foxy { position: absolute; top: 21px; left: 14px; width: 49.5px; height: 48px; background-image: url('/game/sunnyland/Characters/Foxy/run/spritesheet.png'); background-size: 297px 48px; filter: drop-shadow(0 7px 8px rgba(10,16,30,.45)); animation: sunny-run-section .78s steps(6) infinite; }
+.section-artwork-character { position: absolute; z-index: 2; bottom: 12px; left: 25px; width: 52px; height: 48px; background-repeat: no-repeat; image-rendering: pixelated; filter: drop-shadow(0 7px 8px rgba(10,16,30,.45)); }
+.section-character-foxy { background-image: url('/game/sunnyland/Characters/Foxy/run/spritesheet.png'); background-size: 297px 45px; animation: section-foxy .95s steps(6) infinite; }
+.section-character-frog { background-image: url('/game/sunnyland/Characters/frog/Spritesheets/frog-idle.png'); background-size: 210px 48px; animation: section-frog 1.2s steps(4) infinite; }
+.section-character-opossum { width: 58px; height: 45px; background-image: url('/game/sunnyland/Characters/Opossum/spritesheet.png'); background-size: 348px 45px; animation: section-opossum .95s steps(6) infinite; }
+.section-character-frog, .section-character-opossum { transform: scaleX(-1); }
+.section-artwork-bubble { position: absolute; z-index: 2; top: 10px; left: 72px; padding: 5px 9px; border: 1px solid rgba(255,255,255,.5); border-radius: 12px 12px 12px 3px; color: #26334c; background: #fff3bf; box-shadow: 0 3px 12px rgba(6,12,25,.25); font: 800 11px/1.2 ui-rounded, system-ui, sans-serif; animation: bubble-wave 2.8s ease-in-out infinite; }
+.section-artwork-gem { position: absolute; top: 47px; right: 13px; width: 30px; height: 26px; background-image: url('/game/sunnyland/Misc/Sunnyland items/Spritesheets/gem.png'); background-size: 150px 26px; filter: drop-shadow(0 2px 6px rgba(94,228,255,.35)); animation: sunny-gem-section .85s steps(5) infinite, gem-hover 2.5s ease-in-out infinite; }
+.section-artwork-mark { position: absolute; width: 42px; height: 42px; right: 15px; top: 5px; filter: drop-shadow(0 0 14px var(--art-glow)); animation: artwork-mark-bob 3.2s ease-in-out infinite; }
+.opossum-text-scene { position: relative; isolation: isolate; display: flex; align-items: flex-start; width: min(100%, 32rem); min-height: 112px; margin: 1.1rem 0 1.4rem; padding: 16px; overflow: hidden; border: 1px solid rgba(186,220,191,.12); border-radius: 14px; background: linear-gradient(180deg,rgba(104,194,221,.07),rgba(55,105,80,.14)); }
+.opossum-text-copy { position: relative; z-index: 1; margin: 0; color: #b7e7ad; font: 750 1.15rem/1.42 Onest,system-ui,sans-serif; text-shadow: 0 2px 18px rgba(100,195,130,.13); }
+.opossum-text-ground { position: absolute; right: 8%; bottom: 13px; left: 8%; height: 2px; border-radius: 2px; background: repeating-linear-gradient(90deg,#4d9651 0 15px,#72ad56 15px 31px,#8abf5a 31px 43px); }
+.opossum-text-runner { position: absolute; z-index: 2; bottom: 16px; left: 8%; width: 48px; height: 30px; background: url('/game/sunnyland/Characters/Opossum/spritesheet.png') left center / 288px 30px no-repeat; image-rendering: pixelated; opacity: 0; transform: scaleX(-1); transform-origin: center; pointer-events: none; animation: opossum-cross 6.5s ease-in-out infinite, opossum-run-frames 1.05s steps(6) infinite; }
+@keyframes opossum-cross { 0%, 12% { left: 8%; opacity: 0; } 18% { opacity: 1; } 78% { left: calc(92% - 48px); opacity: 1; } 88%, 100% { left: calc(92% - 48px); opacity: 0; } }
+@keyframes opossum-run-frames { to { background-position-x: -288px; } }
+.character-picker { background: linear-gradient(115deg, rgba(255,255,255,.055), rgba(45,184,203,.045), rgba(255,194,64,.045)); box-shadow: inset 0 1px rgba(255,255,255,.06); }
+.character-picker-kicker, .character-picker-note { color: #fbd273; font: 800 .68rem/1.4 ui-monospace, monospace; letter-spacing: .12em; }
+.character-picker-note { color: rgba(234,242,255,.43); font-size: .58rem; }
+.character-choice { position: relative; isolation: isolate; min-height: 118px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .25rem; overflow: hidden; border: 1px solid rgba(255,255,255,.09); border-radius: 14px; background: rgba(11,19,34,.5); transition: border-color .2s ease, background .2s ease, transform .2s ease, box-shadow .2s ease; }
+.character-choice::before { position: absolute; z-index: 0; bottom: 58px; left: 50%; width: 64px; height: 7px; border-radius: 50%; background: radial-gradient(ellipse,rgba(3,12,20,.74),rgba(69,111,75,.38) 55%,transparent 78%); content: ""; transform: translateX(-50%); }
+.character-choice:hover { transform: translateY(-2px); border-color: rgba(255,217,118,.4); }
+.character-choice-active { border-color: rgba(255,211,102,.72); background: linear-gradient(145deg, rgba(255,198,70,.15), rgba(61,194,196,.1)); box-shadow: inset 0 0 0 1px rgba(255,211,102,.14), 0 5px 18px rgba(4,10,20,.15); }
+.character-choice:focus-visible { outline: 2px solid #ffdb7d; outline-offset: 2px; }
+.character-choice-sprite { position: relative; z-index: 1; display: block; width: 54px; height: 48px; background-repeat: no-repeat; image-rendering: pixelated; transform: scale(1.05); }
+.character-choice-foxy-sprite { background-image: url('/game/sunnyland/Characters/Foxy/run/spritesheet.png'); background-size: 297px 48px; animation: picker-foxy .9s steps(6) infinite; }
+.character-choice-frog-sprite { background-image: url('/game/sunnyland/Characters/frog/Spritesheets/frog-idle.png'); background-size: 210px 48px; animation: picker-frog 1.05s steps(4) infinite; }
+.character-choice-opossum-sprite { width: 58px; height: 45px; background-image: url('/game/sunnyland/Characters/Opossum/spritesheet.png'); background-size: 348px 45px; animation: picker-opossum 1.1s steps(6) infinite; }
+.character-choice-frog-sprite, .character-choice-opossum-sprite { transform: scaleX(-1); }
+.hero-scene { width: 100%; }
+.hero-scene .greeting-scene { width: 100%; min-width: 0; height: 340px; }
+.hero-scene .greeting-foxy { left: calc(50% - 128px); }
+.hero-scene .greeting-frog { left: calc(50% + 4px); }
+.hero-scene .greeting-sun { right: 14%; }
+.greeting-scene { position: relative; display: block; width: min(46vw, 630px); min-width: 360px; height: 375px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); border-radius: 44% 56% 51% 49% / 44% 42% 58% 56%; background: radial-gradient(ellipse at 52% 69%, rgba(57,191,184,.12), transparent 50%), linear-gradient(150deg, rgba(255,198,70,.04), rgba(27,43,67,.12)); filter: drop-shadow(0 20px 34px rgba(12,20,32,.32)); }
+.greeting-sun { position: absolute; top: 54px; right: 103px; width: 72px; height: 72px; border-radius: 50%; background: #dcb653; box-shadow: 0 0 42px rgba(255,195,88,.3); opacity: .9; }
+.greeting-ground { position: absolute; z-index: 1; right: 19%; bottom: 44px; left: 19%; height: 9px; border-top: 2px solid rgba(215,231,142,.8); border-radius: 50%; background: linear-gradient(180deg,rgba(82,144,80,.76),rgba(40,77,69,.24)); box-shadow: 0 4px 8px rgba(3,12,22,.25); }
+.greeting-character { position: absolute; z-index: 2; bottom: 53px; display: block; width: 90px; height: 86px; background-repeat: no-repeat; image-rendering: pixelated; filter: drop-shadow(0 9px 9px rgba(9,16,28,.45)); }
+.greeting-character { padding: 0; border: 0; background-color: transparent; cursor: pointer; pointer-events: auto; }
+.greeting-character:hover, .greeting-character:focus-visible { filter: drop-shadow(0 0 12px rgba(255,226,138,.8)); outline: none; }
+.greeting-character:focus-visible { border-radius: 12px; box-shadow: 0 0 0 2px #ffe28a; }
+.greeting-foxy { left: calc(50% - 170px); background-image: url('/game/sunnyland/Characters/Foxy/run/spritesheet.png'); background-size: 540px 86px; background-position: 0 0; }
+.greeting-frog { left: calc(50% - 20px); background-image: url('/game/sunnyland/Characters/frog/Spritesheets/frog-idle.png'); background-size: 385px 86px; background-position: 0 0; }
+.greeting-speech { position: absolute; z-index: 3; left: 50%; top: 36px; display: grid; gap: 5px; width: min(205px, calc(100% - 64px)); min-width: 0; min-height: 90px; padding: 15px 18px; border: 1px solid rgba(255,255,255,.75); border-radius: 17px 17px 17px 5px; color: #26334c; background: linear-gradient(145deg, #fff6d5, #ffe39a); box-shadow: 0 8px 18px rgba(9,15,30,.22); overflow-wrap: anywhere; opacity: 0; transform: translate(-50%, 10px) scale(.8); }
+.greeting-speech::after { content: ""; position: absolute; bottom: -7px; left: 18px; width: 14px; height: 14px; background: #ffe6aa; rotate: 45deg; border-right: 1px solid rgba(255,255,255,.75); border-bottom: 1px solid rgba(255,255,255,.75); }
+.greeting-speech span { font-size: 1.15rem; line-height: 1.15; font-weight: 900; }
+.greeting-speech small { color: #776644; font-size: .78rem; font-weight: 650; }
+.greeting-caption { position: absolute; bottom: 24px; left: 50%; color: rgba(238,245,255,.62); font: 700 .72rem/1.2 ui-monospace, monospace; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; transform: translateX(-50%); }
+.greeting-spark { position: absolute; z-index: 1; color: #ffe18a; font-size: 21px; opacity: 0; }
+.greeting-spark-one { left: 29%; top: 132px; }
+.greeting-spark-two { right: 25%; top: 170px; color: #8ce9db; }
+.greeting-scene-visible .greeting-foxy { animation: meet-from-left .8s cubic-bezier(.2,.8,.2,1) both, greeting-foxy-run .8s steps(6) 1; }
+.greeting-scene-visible .greeting-frog { animation: meet-from-right .85s cubic-bezier(.2,.8,.2,1) both, greeting-frog-idle 1s steps(4) 2; }
+.greeting-scene-visible .greeting-speech { animation: speech-pop .42s cubic-bezier(.2,.8,.2,1) .68s both, speech-float 3.2s ease-in-out 1.1s infinite; }
+.greeting-scene-visible .greeting-spark-one { animation: spark-in .6s ease-out .8s both; }
+.greeting-scene-visible .greeting-spark-two { animation: spark-in .6s ease-out 1s both; }
+.greeting-scene-visible .greeting-character { animation-fill-mode: both; }
+.greeting-scene-visible .greeting-foxy { animation: meet-from-left .75s cubic-bezier(.2,.8,.2,1) both, greeting-foxy-run .8s steps(6) 1; }
+.greeting-scene-visible .greeting-frog { animation: meet-from-right .8s cubic-bezier(.2,.8,.2,1) both, greeting-frog-idle 1s steps(4) 2; }
+@keyframes section-foxy { to { background-position-x: -297px; } }
+@keyframes section-frog { to { background-position-x: -210px; } }
+@keyframes section-opossum { to { background-position-x: -348px; } }
+@keyframes picker-foxy { to { background-position-x: -297px; } }
+@keyframes picker-frog { to { background-position-x: -210px; } }
+@keyframes picker-opossum { to { background-position-x: -348px; } }
+@keyframes bubble-wave { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-4px) rotate(2deg); } }
+@keyframes meet-from-left { from { translate: -40px 0; opacity: 0; } to { translate: 0 0; opacity: 1; } }
+@keyframes meet-from-right { from { translate: 40px 0; opacity: 0; } to { translate: 0 0; opacity: 1; } }
+@keyframes greeting-foxy-run { from { background-position-x: 0; } to { background-position-x: -540px; } }
+@keyframes greeting-frog-idle { from { background-position-x: 0; } to { background-position-x: -385px; } }
+@keyframes speech-pop { to { opacity: 1; transform: translate(-50%, 0) scale(1); } }
+@keyframes speech-float { 50% { translate: 0 -4px; } }
+@keyframes spark-in { from { opacity: 0; scale: .2; rotate: -30deg; } to { opacity: .9; scale: 1; rotate: 0deg; } }
+@keyframes inline-foxy-run { to { background-position-x: -198px; } }
+@keyframes inline-frog-idle { to { background-position-x: -140px; } }
+@keyframes inline-opossum-walk { to { background-position-x: -216px; } }
+.world-progression { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .6rem; }
+.world-stage { display: flex; align-items: center; gap: .7rem; min-width: 0; min-height: 62px; padding: .65rem .75rem; border: 1px solid rgba(255,255,255,.09); border-radius: 13px; color: rgba(232,239,246,.65); background: rgba(255,255,255,.025); transition: border-color .2s, background-color .2s, color .2s; }
+.world-stage-number { display: grid; place-items: center; flex: 0 0 30px; width: 30px; height: 30px; border: 1px solid rgba(255,255,255,.13); border-radius: 50%; color: #ffc54f; font: 800 .74rem/1 ui-monospace,monospace; }
+.world-stage-copy { display: grid; gap: .22rem; min-width: 0; }
+.world-stage-copy strong { overflow: hidden; color: #d9e0e8; font-size: .78rem; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; }
+.world-stage-copy small { color: rgba(207,219,231,.55); font: 600 .65rem/1.2 ui-monospace,monospace; }
+.world-stage[data-state="complete"] { border-color: rgba(106,210,154,.24); color: #e7f4e9; background: linear-gradient(120deg,rgba(87,166,105,.11),rgba(255,255,255,.02)); }
+.world-stage[data-state="complete"] .world-stage-number { border-color: rgba(106,210,154,.4); color: #83e6ac; }
+.world-stage[data-state="active"] { border-color: rgba(255,197,79,.46); color: #fff7e6; background: linear-gradient(115deg,rgba(255,197,79,.13),rgba(47,170,190,.09)); box-shadow: 0 8px 20px rgba(7,15,24,.12); }
+.world-stage[data-state="active"] .world-stage-number { border-color: rgba(255,197,79,.58); color: #ffdb7a; background: rgba(255,197,79,.1); }
+.world-stage[data-state="upcoming"] .world-stage-number { color: #c1c9d5; }
+.world-current-copy { display: grid; gap: .42rem; max-width: 320px; margin: 0; }
+.world-current-copy strong { color: #f8ddb0; font-size: .86rem; }
+.world-current-copy small { color: #aab7c8; font: 600 .72rem/1.45 ui-monospace,monospace; }
+.site-header { background: linear-gradient(180deg, rgba(13,23,39,.94), rgba(17,28,44,.88)); backdrop-filter: blur(18px); box-shadow: 0 8px 30px rgba(4,10,18,.15); }
+.nav-world-rail { position: absolute; z-index: 2; right: 0; bottom: -18px; left: 0; width: 100%; height: 18px; overflow: visible; pointer-events: none; }
+.nav-world-rail::before { position: absolute; z-index: 4; right: 0; bottom: 0; left: 0; height: 5px; content: ""; background: linear-gradient(180deg,rgba(198,233,143,.5),transparent 2px),repeating-linear-gradient(90deg,#397348 0 13px,#558d49 13px 27px,#6b9c4d 27px 40px); border-top: 1px solid rgba(196,232,136,.46); }
+.nav-world-island { position: absolute; bottom: 5px; width: 57px; height: 12px; border: 1px solid rgba(207,227,145,.65); border-bottom: 0; border-radius: 8px 8px 0 0; background: linear-gradient(180deg,#8ab85a,#4d8650 65%,#315d48); box-shadow: 0 -3px 8px rgba(95,177,111,.18); }
+.nav-world-island-left { left: 9%; width: 62px; }
+.nav-world-island-right { right: 10%; width: 56px; }
+.nav-world-island-mid { left: 47%; width: 53px; }
+.nav-world-mid-grass { position: absolute; bottom: 9px; left: 17px; width: 20px; height: 10px; border-radius: 90% 90% 20% 20%; background: linear-gradient(130deg,#b7da79,#58a56a); }
+.nav-world-bush { position: absolute; left: 12px; bottom: 9px; width: 23px; height: 15px; border-radius: 55% 55% 20% 20%; background: radial-gradient(circle at 30% 25%,#b4d878 0 18%,transparent 20%),linear-gradient(145deg,#5db76d,#277456); }
+.nav-world-flower { position: absolute; left: 46px; bottom: 10px; width: 6px; height: 8px; background: #ffe084; border-radius: 50%; box-shadow: 0 5px 0 -2px #64a65a; }
+.nav-world-tree { position: absolute; right: 12px; bottom: 10px; width: 29px; height: 33px; background: url('/game/sunnyland/environment/Props/tree.png') center bottom / contain no-repeat; image-rendering: pixelated; }
+.nav-world-cloud { position: absolute; right: 26%; top: 3px; width: 60px; height: 17px; background: url('/game/sunnyland/environment/Background/clouds-transparent.png') center / 60px 17px no-repeat; opacity: .72; }
+.nav-world-runner { position: absolute; z-index: 3; bottom: 5px; left: calc(10px + (100% - 30px) * var(--scroll-progress, 0)); width: 21px; height: 21px; background: url('/game/sunnyland/Characters/Foxy/run/spritesheet.png') left / 126px 21px no-repeat; image-rendering: pixelated; animation: nav-foxy-run .9s steps(6) infinite; transform-origin: center; transition: left .12s linear, transform .18s ease; }
+.nav-world-rail[data-scroll-direction="reverse"] .nav-world-runner { transform: scaleX(-1); }
+.nav-world-gem { position: absolute; z-index: 2; left: 65%; bottom: 18px; width: 13px; height: 12px; background: url('/game/sunnyland/Misc/Sunnyland items/Spritesheets/gem.png') left / 65px 12px no-repeat; image-rendering: pixelated; animation: nav-gem-spin 1s steps(5) infinite; }
+@keyframes nav-foxy-run { to { background-position-x: -126px; } }
+@keyframes nav-gem-spin { to { background-position-x: -65px; } }
+.resume-world-link { min-height: 54px; padding: 5px 15px 5px 7px; border: 2px solid #e9bc58; border-bottom-width: 5px; border-radius: 13px; color: #182231; background: linear-gradient(115deg,#fff2c5,#ffc94f); box-shadow: 0 7px 20px rgba(255,195,63,.15); }
+.resume-world-link:hover { transform: translateY(-3px); box-shadow: 0 10px 26px rgba(255,195,63,.25); }
+.resume-world-icon { position: relative; display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid rgba(255,255,255,.45); border-radius: 9px; color: #fff4ce; background: linear-gradient(145deg,#375a49,#1c3944); }
+.resume-world-gem { position: absolute; right: -5px; top: -7px; width: 17px; height: 15px; background: url('/game/sunnyland/Misc/Sunnyland items/Spritesheets/gem.png') left / 85px 15px no-repeat; image-rendering: pixelated; filter: drop-shadow(0 2px 4px rgba(24,38,60,.55)); }
+.resume-world-link small { color: #71602d; font: 800 .53rem/1.2 ui-monospace, monospace; letter-spacing: .12em; }
+.site-footer { background: radial-gradient(ellipse at 72% 36%, rgba(76,153,92,.16), transparent 36%), linear-gradient(180deg,rgba(27,48,53,.34),rgba(11,20,32,.96)); }
+.footer-world-scene { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 420px); align-items: center; gap: clamp(2rem, 7vw, 6rem); min-height: 245px; overflow: hidden; }
+.footer-message { position: relative; z-index: 2; max-width: 480px; padding: 1.25rem 1.5rem; border: 1px solid rgba(220,245,199,.13); border-radius: 18px; background: linear-gradient(115deg,rgba(16,31,42,.92),rgba(22,45,47,.88)); box-shadow: 0 12px 30px rgba(3,11,19,.2); }
+.footer-kicker { margin: 0; color: #f6ce68; font: 800 .67rem/1.2 ui-monospace,monospace; letter-spacing: .16em; }
+.footer-message p { margin: .55rem 0 .8rem; color: #f1f4e9; font-size: 1.05rem; font-weight: 700; }
+.footer-return-link { display: inline-flex; align-items: center; gap: .35rem; color: #9de2ae; font-size: .83rem; font-weight: 700; }
+.footer-island { position: relative; justify-self: end; width: 100%; height: 142px; border: 1px solid rgba(203,225,157,.4); border-bottom: 0; border-radius: 50% 50% 9px 9px / 28% 28% 9px 9px; background: radial-gradient(ellipse at 52% 0%,rgba(132,188,98,.44),transparent 63%),linear-gradient(180deg,#4b8055 0 12%,#385e4d 13% 31%,#273f43 32% 100%); box-shadow: 0 -7px 24px rgba(73,150,93,.14), inset 0 2px rgba(221,242,163,.28); }
+.footer-island-village::before { position: absolute; inset: 9px 13px auto; height: 2px; content: ""; border-radius: 50%; background: rgba(197,231,135,.38); }
+.footer-island-grass { position: absolute; right: -8px; bottom: 0; left: -8px; height: 13px; border: 1px solid rgba(202,232,139,.5); border-radius: 50% 50% 0 0 / 40% 40% 0 0; background: repeating-linear-gradient(90deg,#4c9454 0 17px,#77ad58 17px 32px,#5c9a50 32px 47px); }
+.footer-island-rock { position: absolute; right: 17%; bottom: 8px; width: 90px; height: 15px; border-radius: 55% 55% 0 0; background: linear-gradient(#476857,#243e43); }
+.footer-friend-wrap { position: absolute; z-index: 3; right: 43%; bottom: 12px; width: 66px; height: 64px; }
+.footer-friend { position: absolute; top: 0; left: 0; display: block; width: 60px; height: 58px; padding: 0; border: 0; background: url('/game/sunnyland/Characters/Foxy/run/spritesheet.png') left top / 360px 58px no-repeat; image-rendering: pixelated; cursor: pointer; animation: footer-foxy-run .9s steps(6, end) infinite; }
+.footer-friend:focus-visible { outline: 2px solid #ffe28a; outline-offset: 3px; border-radius: 10px; }
+.footer-friend-bubble { position: absolute; z-index: 1; left: 36px; bottom: 62px; padding: 6px 9px; border-radius: 12px 12px 12px 3px; color: #29364c; background: #fff0b8; box-shadow: 0 4px 12px rgba(4,12,24,.25); font-size: .7rem; font-weight: 800; white-space: nowrap; transform: translateY(4px) scale(.92); transition: transform .2s ease; }
+.footer-friend-bubble-open { transform: translateY(0) scale(1); }
+.footer-house { position: absolute; z-index: 1; right: 12%; bottom: 15px; width: 96px; height: 76px; object-fit: contain; object-position: bottom; image-rendering: pixelated; filter: drop-shadow(0 5px 8px rgba(4,12,22,.4)); }
+.footer-tree { position: absolute; z-index: 1; right: 68%; bottom: 13px; width: 62px; height: 76px; object-fit: contain; object-position: bottom; image-rendering: pixelated; filter: drop-shadow(0 5px 8px rgba(4,12,22,.36)); }
+.footer-ground-strip { position: relative; height: 14px; border-top: 2px solid rgba(204,237,141,.45); background: repeating-linear-gradient(90deg,#397448 0 18px,#538d4b 18px 39px,#6aa14f 39px 54px); box-shadow: inset 0 3px rgba(200,234,151,.1); }
+.footer-social-link { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid rgba(255,255,255,.11); border-radius: 50%; color: #b8cfbd; background: rgba(255,255,255,.035); transition: color .2s, transform .2s, border-color .2s; }
+.footer-social-link:hover { color: #ffe28a; transform: translateY(-3px); border-color: rgba(255,226,138,.44); }
+.footer-social-link:focus-visible, .footer-return-link:focus-visible { outline: 2px solid #ffe28a; outline-offset: 4px; border-radius: 999px; }
+.footer-meta { padding-top: 1rem; padding-bottom: 1.25rem; border-top: 1px solid rgba(255,255,255,.06); }
+@keyframes footer-foxy-run { to { background-position-x: -360px; } }
+@keyframes footer-friend-bob { 50% { translate: 0 -5px; } }
+@media (max-width: 800px) { .footer-world-scene { grid-template-columns: minmax(0, 1fr) minmax(220px, 36%); gap: 1.25rem; } .footer-island { height: 124px; } }
+@media (max-width: 640px) { .footer-world-scene { grid-template-columns: minmax(0, 1fr); gap: 1rem; min-height: 0; padding-top: 1.2rem; padding-bottom: 1.25rem; } .footer-message { width: 100%; max-width: none; padding: .9rem 1rem; } .footer-island { justify-self: center; width: min(390px,100%); height: 112px; } .footer-friend-wrap { right: 42%; bottom: 11px; scale: .82; } .footer-house { right: 10%; bottom: 12px; width: 77px; height: 61px; } .footer-tree { right: 70%; bottom: 11px; width: 50px; height: 62px; } .footer-island-rock { right: 15%; width: 55px; } .footer-cloud-bank { right: -10%; width: 180px; background-size: 180px 47px; } .footer-meta { padding-top: .9rem; padding-bottom: 1rem; } }
+@media (max-width: 640px) { .world-progression { gap: .35rem; } .world-stage { min-height: 82px; flex-direction: column; align-items: flex-start; gap: .4rem; padding: .55rem; } .world-stage-number { flex-basis: 25px; width: 25px; height: 25px; font-size: .65rem; } .world-stage-copy strong { overflow: visible; font-size: .68rem; text-overflow: clip; white-space: normal; } .world-stage-copy small { font-size: .58rem; } .world-current-copy { max-width: none; } }
+@media (prefers-reduced-motion: reduce) { .footer-friend, .footer-social-link { animation: none; transition: none; } }
+@media (max-width: 640px) { .nav-world-rail { bottom: -18px; height: 18px; } .nav-world-island-left { left: 8%; } .nav-world-island-mid { left: 47%; } .nav-world-island-right { right: 8%; } .nav-world-gem { left: 65%; } .nav-world-cloud { right: 26%; } .nav-world-runner { bottom: 5px; width: 17px; height: 17px; background-size: 102px 17px; } @keyframes nav-foxy-run { to { background-position-x: -102px; } } }
+@media (max-width: 520px) { .section-label { gap: .4rem; } .inline-character-wrap { width: 26px; height: 27px; } .inline-character-sprite { scale: .84; transform-origin: left bottom; } .inline-character-opossum .inline-character-sprite { width: 31px; } }
+@keyframes sunny-run-section { to { background-position-x: -297px; } }
+@keyframes sunny-gem-section { to { background-position-x: -150px; } }
+@keyframes artwork-mark-bob { 50% { transform: translateY(-5px) rotate(8deg); } }
+@keyframes cloud-drift { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-8px); } }
+@media (max-width: 1640px) { .section-artwork { display: none; } }
+@media (max-width: 520px) { .opossum-text-scene { min-height: 104px; padding: 13px; } .opossum-text-copy { font-size: 1rem; } .opossum-text-runner { width: 42px; height: 26px; background-size: 252px 26px; } }
+@media (max-width: 1280px) { .hero-scene { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .section-artwork *, .section-artwork, .hero-runner-stage *, .hero-runner-stage,
+  .character-choice-sprite, .section-artwork-bubble { animation: none !important; }
+  .greeting-scene-visible .greeting-foxy { animation: none !important; opacity: 1; translate: 0; background-position: 0 0; }
+  .greeting-scene-visible .greeting-frog { animation: none !important; opacity: 1; translate: 0; background-position: 0 0; }
+  .greeting-scene-visible .greeting-speech { animation: none !important; opacity: 1; transform: translate(-50%, 0) scale(1); }
+  .greeting-scene-visible .greeting-spark-one, .greeting-scene-visible .greeting-spark-two { animation: none !important; opacity: .8; }
+}
+
+/* In-flow scenery bands reserve their own space, keeping game art clear of copy. */
+.sprite-lane { position: relative; isolation: isolate; display: block; width: 100%; max-width: 58rem; height: 92px; margin: .35rem 0 1.65rem; overflow: hidden; border: 1px solid rgba(186,220,191,.12); border-radius: 14px; background: radial-gradient(ellipse at 50% 100%,rgba(58,130,83,.15),transparent 62%),linear-gradient(180deg,rgba(104,194,221,.08),rgba(55,105,80,.12)); box-shadow: inset 0 1px rgba(255,255,255,.035), 0 8px 22px rgba(4,12,20,.12); }
+.sprite-lane-village { background: radial-gradient(ellipse at 50% 100%,rgba(74,137,87,.2),transparent 62%),linear-gradient(180deg,rgba(140,195,207,.09),rgba(60,119,72,.17)); }
+.sprite-lane-cloud { position: absolute; z-index: 0; top: 4px; left: 30%; width: 96px; height: 25px; background: url('/game/sunnyland/environment/Background/clouds-transparent.png') center / 96px 25px no-repeat; opacity: .58; animation: cloud-drift 8s ease-in-out infinite; }
+.sprite-lane-tree { position: absolute; z-index: 1; left: 10%; bottom: 25px; width: 48px; height: 55px; object-fit: contain; object-position: bottom; image-rendering: pixelated; filter: drop-shadow(0 3px 5px rgba(5,16,22,.35)); }
+.sprite-lane-runner { position: absolute; z-index: 2; bottom: 25px; width: 36px; height: 34px; background-repeat: no-repeat; image-rendering: pixelated; filter: drop-shadow(0 3px 4px rgba(4,12,20,.35)); transform-origin: center; }
+.sprite-lane-foxy { background-image: url('/game/sunnyland/Characters/Foxy/run/spritesheet.png'); background-size: 216px 36px; animation: lane-travel 12s ease-in-out infinite, lane-foxy-run .9s steps(6) infinite; }
+.sprite-lane-frog { background-image: url('/game/sunnyland/Characters/frog/Spritesheets/frog-idle.png'); background-size: 157.5px 36px; transform: scaleX(-1); animation: lane-travel 12s ease-in-out infinite, lane-frog-idle 1.1s steps(4) infinite; }
+.sprite-lane-gem { position: absolute; z-index: 2; width: 20px; height: 17px; background: url('/game/sunnyland/Misc/Sunnyland items/Spritesheets/gem.png') left / 100px 17px no-repeat; image-rendering: pixelated; filter: drop-shadow(0 2px 4px rgba(103,227,245,.35)); animation: lane-gem-spin .9s steps(5) infinite, gem-hover 2.6s ease-in-out infinite; }
+.sprite-lane-gem-one { top: 13px; left: 60%; }
+.sprite-lane-gem-two { top: 29px; left: 76%; animation-delay: -.42s, -.8s; }
+.sprite-lane-house { position: absolute; z-index: 1; right: 8%; bottom: 25px; width: 58px; height: 47px; object-fit: contain; object-position: bottom; image-rendering: pixelated; filter: drop-shadow(0 3px 5px rgba(5,12,20,.4)); }
+.sprite-lane-ground { position: absolute; z-index: 0; right: 0; bottom: 0; left: 0; height: 25px; border-top: 4px solid #84b956; background: repeating-linear-gradient(90deg,#8a5748 0 12px,#a5694b 12px 24px,#71483e 24px 37px); box-shadow: inset 0 3px rgba(224,170,103,.16); }
+.sprite-lane-ground::before { position: absolute; top: -4px; right: 0; left: 0; height: 5px; content: ""; background: repeating-linear-gradient(90deg,#4d9651 0 15px,#72ad56 15px 31px,#8abf5a 31px 43px); }
+.project-diamond { position: relative; display: inline-block; flex: 0 0 22px; width: 22px; height: 19px; background: url('/game/sunnyland/Misc/Sunnyland items/Spritesheets/gem.png') left / 110px 19px no-repeat; image-rendering: pixelated; filter: drop-shadow(0 1px 5px rgba(102,225,239,.34)); }
+.project-diamond-collect { animation: lane-gem-spin .95s steps(5) 1, project-gem-catch .55s ease-out both; }
+.project-diamond-collect::after { position: absolute; inset: -6px; content: ""; border: 1px solid rgba(156,238,255,.7); border-radius: 50%; opacity: 0; transform: scale(.45); animation: project-gem-ring .55s ease-out both; pointer-events: none; }
+@keyframes project-gem-catch { 0% { filter: drop-shadow(0 0 0 rgba(126,236,255,0)); } 55% { filter: drop-shadow(0 0 13px rgba(126,236,255,.95)); } 100% { filter: drop-shadow(0 1px 5px rgba(102,225,239,.38)); } }
+@keyframes project-gem-ring { 0% { opacity: .8; transform: scale(.45); } 100% { opacity: 0; transform: scale(1.55); } }
+@keyframes lane-travel { 0% { left: 4%; opacity: 0; } 8% { opacity: 1; } 90% { left: calc(96% - 36px); opacity: 1; } 100% { left: calc(96% - 36px); opacity: 0; } }
+@keyframes lane-foxy-run { to { background-position-x: -216px; } }
+@keyframes lane-frog-idle { to { background-position-x: -157.5px; } }
+@keyframes lane-gem-spin { to { background-position-x: -100px; } }
+@media (max-width: 640px) { .sprite-lane { height: 82px; margin-bottom: 1.35rem; } .sprite-lane-tree { left: 4%; bottom: 25px; width: 40px; height: 47px; } .sprite-lane-house { right: 4%; bottom: 25px; width: 48px; height: 39px; } .sprite-lane-gem-two { left: 72%; } .character-choice::before { bottom: 47px; } .footer-island { right: 3%; width: 94%; } }
+@media (prefers-reduced-motion: reduce) { .sprite-lane *, .project-diamond, .project-diamond::after { animation: none !important; } }
