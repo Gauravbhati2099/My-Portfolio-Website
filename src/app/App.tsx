@@ -27,11 +27,11 @@ import {
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 const NAV_ITEMS = [
-  { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
+  { label: "Experience", href: "#experience" },
+  { label: "Skills", href: "#skills" },
   { label: "Architecture", href: "#architecture" },
-  { label: "Mini game", href: "#mini-game" },
+  { label: "Playground", href: "#mini-game" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -50,9 +50,10 @@ const SUNNY_CHARACTERS = [
 ];
 
 const SKILL_GROUPS = [
-  { label: "AI & retrieval", items: ["LangGraph", "LangChain", "LLMs", "RAG", "Diffusers", "Stable Diffusion"] },
-  { label: "Backend & data", items: ["Python", "FastAPI", "REST APIs", "Pydantic", "MongoDB", "PostgreSQL", "Redis"] },
-  { label: "Platform & observability", items: ["Docker", "OpenTelemetry"] },
+  { label: "Programming & backend", items: ["Python", "C++", "SQL", "FastAPI", "REST APIs"] },
+  { label: "AI & LLM systems", items: ["RAG", "LangChain", "LangGraph", "Embeddings", "NLP"] },
+  { label: "Data & infrastructure", items: ["MongoDB", "PostgreSQL", "Redis", "Docker", "Git"] },
+  { label: "Enterprise automation", items: ["Power Automate", "SharePoint", "Microsoft Graph API", "SAP integrations"] },
 ];
 
 const EXPERIENCE = [
@@ -60,14 +61,13 @@ const EXPERIENCE = [
     id: "tempsens",
     company: "Tempsens Instruments",
     role: "IT Intern",
-    period: "Jul 2026 – Present",
-    type: "Full-time Internship",
+    period: "Jul 2026 – Nov 2026",
+    type: "Internship · scheduled end date",
     bullets: [
       "Developing and enhancing enterprise applications using Microsoft Power Platform.",
       "Creating Power Apps, Power Automate workflows, and internal business solutions.",
-      "Preparing user manuals, technical documentation, and process guides for enterprise systems.",
-      "Testing, debugging, and improving Gate Management, SRM, SCM, and related business applications.",
-      "Collaborating with business stakeholders and third-party vendors to gather requirements and suggest product improvements."
+      "Testing and improving Gate Management, SRM, SCM, and related business applications.",
+      "Documenting enterprise processes and coordinating requirements with business stakeholders and vendors."
     ],
     tech: [
       "Power Apps",
@@ -89,8 +89,7 @@ const EXPERIENCE = [
       "Architected an AI-powered customer support platform with conversational AI, long-term memory, and document workflows.",
       "Built modular LangGraph pipelines with asynchronous background workers for memory extraction and auditing.",
       "Designed a schema-aware natural language MongoDB query engine with runtime schema discovery.",
-      "Reduced query planning latency from approximately 30 seconds to under 5 seconds.",
-      "Optimized memory retrieval from approximately 2.3 seconds to under 100 milliseconds using Redis caching."
+      "Reduced query planning from approximately 30 seconds to under 5 seconds and memory retrieval from approximately 2.3 seconds to under 100 milliseconds using Redis caching."
     ],
     tech: [
       "Python",
@@ -129,6 +128,8 @@ const PROJECTS = [
     id: "customer-support",
     title: "Intelligent Customer Support Platform",
     tagline: "Workflow-driven AI assistant with long-term memory",
+    githubUrl: "https://github.com/Gauravbhati2099/Autonomous-Business-Assistant",
+    flow: ["Support request", "FastAPI", "LangGraph", "MongoDB · Redis"],
 
     description:
       "An AI-powered customer support platform combining conversational AI, workflow orchestration, persistent memory, document processing, and natural-language data access. Built with a modular LangGraph architecture to support scalable business workflows.",
@@ -224,6 +225,8 @@ const PROJECTS = [
     id: "nl-mongo",
     title: "Natural Language MongoDB Query Engine",
     tagline: "Natural language to MongoDB query translation",
+    githubUrl: "https://github.com/Gauravbhati2099/Mongo_DB_query_engine",
+    flow: ["User request", "Schema discovery", "Query validation", "MongoDB"],
 
     description:
       "A schema-aware AI query engine that converts natural-language requests into MongoDB aggregation pipelines with runtime schema discovery and query validation.",
@@ -302,6 +305,7 @@ const PROJECTS = [
     id: "enterprise-automation",
     title: "Enterprise Process Automation",
     tagline: "Internal business applications and connected workflows",
+    flow: ["Power Apps", "Power Automate", "SharePoint", "SAP workflows"],
     description:
       "Current internship work building and improving enterprise applications with Microsoft Power Platform, supporting Gate Management, SRM, SCM, and related processes.",
     problem:
@@ -314,13 +318,13 @@ const PROJECTS = [
   },
 ];
 
+const FEATURED_PROJECT_IDS = ["enterprise-automation", "customer-support", "nl-mongo"];
+
 const ARCH_FLOW = [
-  { label: "User", sublabel: "HTTP / WebSocket", icon: Globe, layer: "Entry" },
-  { label: "FastAPI", sublabel: "Gateway + Auth", icon: Zap, layer: "Gateway", featured: true },
-  { label: "Planner Agent", sublabel: "Query Router", icon: Cpu, layer: "Planning", featured: true },
-  { label: "LangGraph", sublabel: "Agent Orchestration", icon: Layers, layer: "Orchestration", featured: true },
-  { label: "Memory Service", sublabel: "Redis · MongoDB", icon: Database, layer: "Persistence" },
-  { label: "LLM", sublabel: "Cloud/Local Models", icon: Cpu, layer: "Intelligence" },
+  { label: "Client / UI", sublabel: "Support request · dashboard", icon: Globe, layer: "Input" },
+  { label: "API / orchestration", sublabel: "FastAPI · LangGraph", icon: Layers, layer: "Workflow", featured: true },
+  { label: "AI services", sublabel: "Planning · retrieval · LLM", icon: Cpu, layer: "Reasoning", featured: true },
+  { label: "Data services", sublabel: "MongoDB · Redis · logs", icon: Database, layer: "Persistence" },
 ];
 
 const ARCH_STATS = [
@@ -494,6 +498,20 @@ function SiteTooltipLayer() {
     const selector = 'a[href],button:not(:disabled),input:not(:disabled),textarea:not(:disabled),select:not(:disabled),[role="button"],[data-tooltip]';
     const previousDescriptions = new WeakMap<HTMLElement, string | null>();
     let activeTarget: HTMLElement | null = null;
+    let pendingTarget: HTMLElement | null = null;
+    let pendingDescribed = false;
+    let pendingPointer = false;
+    let pendingFocus = false;
+    let showTimer: number | null = null;
+
+    const cancelPending = () => {
+      if (showTimer !== null) window.clearTimeout(showTimer);
+      showTimer = null;
+      pendingTarget = null;
+      pendingDescribed = false;
+      pendingPointer = false;
+      pendingFocus = false;
+    };
 
     const restoreDescription = (target: HTMLElement) => {
       if (!previousDescriptions.has(target)) return;
@@ -504,6 +522,7 @@ function SiteTooltipLayer() {
     };
 
     const hide = () => {
+      cancelPending();
       if (activeTarget) restoreDescription(activeTarget);
       activeTarget = null;
       setTooltip(null);
@@ -532,25 +551,57 @@ function SiteTooltipLayer() {
       setTooltip({ text, x: Math.min(window.innerWidth - 150, Math.max(150, rect.left + rect.width / 2)), y: below ? rect.bottom + 8 : rect.top - 8, below, described });
     };
 
+    const scheduleShow = (target: HTMLElement, described: boolean, source: "pointer" | "focus") => {
+      if (activeTarget === target) {
+        show(target, described);
+        return;
+      }
+      if (pendingTarget !== target) {
+        hide();
+        pendingTarget = target;
+        pendingDescribed = described;
+      }
+      if (source === "pointer") pendingPointer = true;
+      else pendingFocus = true;
+      pendingDescribed ||= described;
+      if (showTimer !== null) return;
+      showTimer = window.setTimeout(() => {
+        if (pendingTarget !== target) return;
+        const shouldDescribe = pendingDescribed;
+        cancelPending();
+        show(target, shouldDescribe);
+      }, 5000);
+    };
+
     const findTarget = (target: EventTarget | null) => target instanceof Element ? target.closest<HTMLElement>(selector) : null;
     const onPointerOver = (event: PointerEvent) => {
       if (event.pointerType === "touch") return;
       const target = findTarget(event.target);
-      if (target) show(target, document.activeElement === target && target.hasAttribute("data-tooltip"));
+      if (target) scheduleShow(target, document.activeElement === target && target.hasAttribute("data-tooltip"), "pointer");
     };
     const onPointerOut = (event: PointerEvent) => {
       const target = findTarget(event.target);
       const next = findTarget(event.relatedTarget);
-      if (target && target === activeTarget && next !== target && document.activeElement !== target) hide();
+      if (!target || next === target) return;
+      if (target === pendingTarget) {
+        pendingPointer = false;
+        if (!pendingFocus) cancelPending();
+      }
+      if (target === activeTarget && document.activeElement !== target) hide();
     };
     const onFocusIn = (event: FocusEvent) => {
       const target = findTarget(event.target);
-      if (target) show(target, target.hasAttribute("data-tooltip"));
+      if (target) scheduleShow(target, target.hasAttribute("data-tooltip"), "focus");
     };
     const onFocusOut = (event: FocusEvent) => {
       const target = findTarget(event.target);
       const next = findTarget(event.relatedTarget);
-      if (target && target === activeTarget && next !== target) hide();
+      if (!target || next === target) return;
+      if (target === pendingTarget) {
+        pendingFocus = false;
+        if (!pendingPointer) cancelPending();
+      }
+      if (target === activeTarget) hide();
     };
 
     document.addEventListener("pointerover", onPointerOver);
@@ -577,10 +628,10 @@ function SiteTooltipLayer() {
 function Nav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [scrollDirection, setScrollDirection] = useState<"forward" | "reverse">("forward");
   const lastY = useRef(0);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onScroll = () => {
@@ -589,28 +640,32 @@ function Nav() {
       setScrollProgress(Math.min(1, Math.max(0, y / maxScroll)));
       if (y !== lastY.current) setScrollDirection(y < lastY.current ? "reverse" : "forward");
       setScrolled(y > 24);
-      if (y > lastY.current && y > 120) {
-        setHidden(true);
-      } else {
-        setHidden(false);
-      }
       lastY.current = y;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      menuButtonRef.current?.focus();
+    };
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [open]);
+
   return (
     <header
-      className={`site-header fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-        hidden ? "-translate-y-full" : "translate-y-0"
-      } ${
+      className={`site-header fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${
         scrolled
           ? "border-b border-white/[0.05] backdrop-blur-xl bg-background/75"
           : ""
       }`}
     >
-      <nav aria-label="Primary navigation" className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+      <nav aria-label="Primary navigation" className="max-w-6xl mx-auto px-6 h-16 sm:h-[68px] flex items-center justify-between">
         <a
           href="#"
           data-tooltip="Gaurav Bhati — return to the top of the page."
@@ -641,7 +696,8 @@ function Nav() {
         </a>
 
         <button
-          onClick={() => setOpen(!open)}
+          ref={menuButtonRef}
+          onClick={() => setOpen((value) => !value)}
           className="lg:hidden inline-flex min-h-11 min-w-11 items-center justify-center p-2 text-muted-foreground hover:text-foreground transition-colors"
           aria-label={open ? "Close navigation menu" : "Open navigation menu"}
           data-tooltip={open ? "Close the site navigation." : "Open the site navigation."}
@@ -664,8 +720,8 @@ function Nav() {
       <div
         id="mobile-navigation"
         aria-hidden={!open}
-        className={`lg:hidden overflow-hidden transition-all duration-300 ${
-          open ? "max-h-80 border-b border-white/[0.05]" : "max-h-0"
+        className={`mobile-navigation lg:hidden ${
+          open ? "mobile-navigation-open border-b border-white/[0.05]" : "mobile-navigation-closed"
         } bg-background/95 backdrop-blur-xl`}
       >
         <ul className="px-6 py-5 flex flex-col gap-3">
@@ -691,9 +747,9 @@ function Nav() {
 
 function Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
+    <section className="relative min-h-[calc(100svh-5rem)] flex flex-col justify-center overflow-hidden">
       <div aria-hidden="true" className="hero-art absolute inset-0 pointer-events-none" />
-      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 px-6 pt-28 pb-20 xl:grid-cols-[minmax(0,1.55fr)_minmax(21rem,.75fr)]">
+      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-8 px-6 pt-28 pb-16 lg:grid-cols-[minmax(0,1.35fr)_minmax(20rem,.75fr)] lg:gap-10">
         <div className="relative z-10">
         <motion.div
           initial={{ opacity: 0 }}
@@ -706,18 +762,18 @@ function Hero() {
             className="text-sm text-muted-foreground"
             style={{ fontFamily: "JetBrains Mono, monospace" }}
           >
-            Available for opportunities
+            AI ENGINEERING · BACKEND · AUTOMATION
           </span>
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 28 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-          className="hero-name text-5xl sm:text-7xl xl:text-[76px] 2xl:text-[80px] font-bold tracking-tight leading-[1.08] mb-7 pb-1 text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-orange-200 to-cyan-200"
+          className="hero-name max-w-[760px] text-4xl sm:text-5xl lg:text-[60px] font-bold tracking-tight leading-[1.08] mb-7 pb-1 text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-orange-200 to-cyan-200"
           style={{ fontFamily: "Onest, sans-serif" }}
         >
-          Gaurav Singh Bhati
+          I build AI-powered systems that solve real problems.
         </motion.h1>
 
         <motion.p
@@ -737,8 +793,9 @@ function Hero() {
           className="max-w-md text-muted-foreground leading-relaxed mb-10 text-base"
           style={{ fontFamily: "DM Sans, sans-serif" }}
         >
-          I design AI-powered products and reliable backend systems, from
-          LangGraph workflows and retrieval pipelines to production APIs.
+          I work across LLM applications, backend APIs, data pipelines and
+          enterprise workflow automation to turn complex processes into useful
+          software.
         </motion.p>
 
         <motion.div
@@ -748,8 +805,17 @@ function Hero() {
           className="flex flex-wrap gap-3"
         >
           <a
+            href="#projects"
+            className="inline-flex min-h-12 items-center gap-2 rounded-lg border-b-4 border-[#a34c17] bg-[#ffca3a] px-5 py-3 text-sm font-black text-[#382514] transition-transform hover:-translate-y-0.5"
+          >
+            View projects
+            <ChevronRight size={18} />
+          </a>
+          <a
             href="/resume.pdf"
-            download
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Gaurav Bhati's resume PDF in a new tab"
             className="resume-world-link inline-flex items-center gap-2 px-5 py-2.5 text-sm font-bold transition-all"
           >
             <span className="resume-world-icon"><FileText size={18} /><span className="resume-world-gem" /></span>
@@ -773,13 +839,6 @@ function Hero() {
             <Linkedin size={18} />
             LinkedIn
           </a>
-          <a
-            href="#projects"
-            className="inline-flex items-center gap-2 px-5 py-2.5 border border-white/10 text-sm font-medium rounded-full hover:border-white/20 hover:bg-white/[0.03] transition-all"
-          >
-            View Projects
-            <ChevronRight size={18} />
-          </a>
         </motion.div>
 
         <motion.div
@@ -797,7 +856,7 @@ function Hero() {
           </span>
         </motion.div>
         </div>
-        <div className="hero-scene hidden xl:block">
+        <div className="hero-scene mx-auto mt-8 block w-full max-w-[360px] lg:mt-0 lg:max-w-none">
           <GreetingScene />
         </div>
       </div>
@@ -807,75 +866,34 @@ function Hero() {
 
 // ─── About ───────────────────────────────────────────────────────────────────
 
-function About() {
+function Skills() {
   return (
-    <section id="about" className="relative py-28 border-t border-white/[0.05]">
-      <SectionArtwork tone="violet" placement="low-left" />
+    <section id="skills" className="relative py-20 sm:py-24 border-t border-white/[0.05]">
       <div className="relative z-10 max-w-6xl mx-auto px-6">
-        <div className="grid lg:grid-cols-[1fr_300px] gap-16 lg:gap-24">
-          <FadeIn>
-            <SectionLabel>About</SectionLabel>
-            <h2
-              className="section-heading text-4xl sm:text-[42px] lg:text-5xl font-bold tracking-tight mb-8"
-              style={{ fontFamily: "Onest, sans-serif" }}
-            >
-              I build systems that think.
-            </h2>
-            <div
-              className="space-y-4 text-muted-foreground leading-relaxed max-w-prose"
-              style={{ fontFamily: "DM Sans, sans-serif" }}
-            >
-              <p>
-                I'm a software engineer specializing in AI systems and backend
-                infrastructure. My work lives at the intersection of large language
-                models and production engineering — where the hard problems aren't
-                just "will the AI work," but "will it scale, stay reliable, and make
-                architectural sense." <InlineCharacter kind="foxy" />
-              </p>
-              <p>
-                At Tempsens Instruments, I work on enterprise applications and process automation. Before that, at ONEPWS, I built AI backend workflows for long-term memory and natural-language database querying with FastAPI, LangGraph, MongoDB, and Redis. <InlineCharacter kind="frog" />
-              </p>
-              <p>
-                Outside of work I explore RAG pipelines, long-context agent memory
-                architectures, and the emerging patterns of agentic AI infrastructure.
-              </p>
-              <OpossumTextRun />
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.15}>
-            <SectionLabel>Tech Stack</SectionLabel>
-            <div className="space-y-5">
-              {SKILL_GROUPS.map((group) => (
-                <div key={group.label}>
-                  <h3 className="mb-2 text-xs font-semibold uppercase tracking-[.14em] text-muted-foreground/75">{group.label}</h3>
-                  <ul className="flex flex-wrap gap-2" aria-label={group.label}>
-                    {group.items.map((tech) => (
-                      <li
-                        key={tech}
-                        className="px-3 py-1.5 text-xs border border-white/[0.08] rounded-lg bg-white/[0.025] text-muted-foreground transition-colors hover:border-white/[0.18] hover:text-foreground"
-                        style={{ fontFamily: "JetBrains Mono, monospace" }}
-                      >
-                        {tech}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-10 pt-8 border-t border-white/[0.05] space-y-3">
-              <div className="flex items-center gap-3">
-                <MapPin size={18} className="text-cyan-300" />
-                <span className="text-sm text-muted-foreground">India</span>
+        <FadeIn>
+          <SectionLabel>Skills</SectionLabel>
+          <h2
+            className="section-heading text-3xl sm:text-4xl font-bold tracking-tight mb-3"
+            style={{ fontFamily: "Onest, sans-serif" }}
+          >
+            A practical AI and backend toolkit.
+          </h2>
+          <p className="max-w-2xl text-muted-foreground leading-relaxed mb-8" style={{ fontFamily: "DM Sans, sans-serif" }}>
+            Tools I use across AI applications, APIs, data systems, and enterprise workflows.
+          </p>
+          <div className="grid gap-6 sm:grid-cols-2">
+            {SKILL_GROUPS.map((group) => (
+              <div key={group.label} className="skill-group border-t border-white/[0.1] pt-4">
+                <h3 className="mb-3 text-sm font-bold text-foreground">{group.label}</h3>
+                <ul className="flex flex-wrap gap-x-3 gap-y-2" aria-label={group.label}>
+                  {group.items.map((tech) => (
+                    <li key={tech} className="skill-item" style={{ fontFamily: "JetBrains Mono, monospace" }}>{tech}</li>
+                  ))}
+                </ul>
               </div>
-              <div className="flex items-center gap-3">
-                <span className="size-2 rounded-full bg-teal-300" />
-                <span className="text-sm text-muted-foreground">Open to remote roles globally</span>
-              </div>
-            </div>
-          </FadeIn>
-        </div>
+            ))}
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
@@ -884,11 +902,8 @@ function About() {
 // ─── Experience ──────────────────────────────────────────────────────────────
 
 function Experience() {
-  const [active, setActive] = useState(EXPERIENCE[0].id);
-  const current = EXPERIENCE.find((e) => e.id === active)!;
-
   return (
-    <section id="experience" className="relative py-28 border-t border-white/[0.05]">
+    <section id="experience" className="relative py-20 sm:py-24 border-t border-white/[0.05]">
       <SectionArtwork tone="cyan" placement="right" />
       <div className="relative z-10 max-w-6xl mx-auto px-6">
         <FadeIn>
@@ -903,99 +918,33 @@ function Experience() {
 
         <SpriteLane scene="village" />
 
-        <div className="grid lg:grid-cols-[220px_1fr] gap-6 lg:gap-10">
-          <FadeIn delay={0.08}>
-            <div className="flex lg:flex-col gap-1">
-              {EXPERIENCE.map((exp) => (
-                <button
-                  key={exp.id}
-                  onClick={() => setActive(exp.id)}
-                  aria-pressed={active === exp.id}
-                  className={`text-left px-4 py-3 rounded-lg border transition-all ${
-                    active === exp.id
-                      ? "border-white/[0.12] bg-white/[0.04] text-foreground"
-                      : "border-transparent text-muted-foreground hover:text-foreground hover:bg-white/[0.02]"
-                  }`}
-                >
-                  <div className="text-sm font-medium" style={{ fontFamily: "DM Sans, sans-serif" }}>
-                    {exp.company}
-                  </div>
-                  <div
-                    className="text-xs text-muted-foreground/60 mt-0.5"
-                    style={{ fontFamily: "JetBrains Mono, monospace" }}
-                  >
-                    {exp.period}
-                  </div>
-                </button>
-              ))}
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.14}>
-            <div className="border border-white/[0.07] rounded-xl p-6 sm:p-8 bg-white/[0.015]">
-              <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
+        <div className="space-y-4">
+          {EXPERIENCE.map((exp, index) => (
+            <FadeIn key={exp.id} delay={index * 0.06}>
+              <article className="experience-entry grid gap-5 border-t border-white/[0.1] py-6 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-10">
                 <div>
-                  <h3
-                    className="text-lg font-semibold text-foreground"
-                    style={{ fontFamily: "Onest, sans-serif" }}
-                  >
-                    {current.role}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mt-0.5" style={{ fontFamily: "DM Sans, sans-serif" }}>
-                    {current.company}
-                    <span
-                      className="ml-2 text-xs"
-                      style={{ fontFamily: "JetBrains Mono, monospace" }}
-                    >
-                      · {current.type}
-                    </span>
-                  </p>
+                  <h3 className="text-lg font-semibold text-foreground" style={{ fontFamily: "Onest, sans-serif" }}>{exp.role}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">{exp.company}</p>
+                  <p className="mt-2 text-xs text-muted-foreground/75" style={{ fontFamily: "JetBrains Mono, monospace" }}>{exp.period}</p>
+                  <p className="mt-1 text-xs text-muted-foreground/60">{exp.type}</p>
                 </div>
-                <span
-                  className="text-xs text-muted-foreground/60 border border-white/[0.06] px-2.5 py-1 rounded"
-                  style={{ fontFamily: "JetBrains Mono, monospace" }}
-                >
-                  {current.period}
-                </span>
-              </div>
-
-              <ul className="space-y-3 mb-7">
-                {current.bullets.map((b, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-3 text-sm text-muted-foreground leading-relaxed"
-                    style={{ fontFamily: "DM Sans, sans-serif" }}
-                  >
-                    <span className="mt-2.5 size-1 rounded-full bg-muted-foreground/30 shrink-0" />
-                    {b}
-                  </li>
-                ))}
-              </ul>
-
-              <div className="pt-5 border-t border-white/[0.05]">
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {current.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="text-xs px-2 py-1 bg-white/[0.04] border border-white/[0.06] rounded text-muted-foreground"
-                      style={{ fontFamily: "JetBrains Mono, monospace" }}
-                    >
-                      {t}
-                    </span>
-                  ))}
+                <div>
+                  <ul className="space-y-2.5">
+                    {exp.bullets.map((bullet) => (
+                      <li key={bullet} className="flex items-start gap-3 text-sm text-muted-foreground leading-relaxed">
+                        <span className="mt-2 size-1.5 rounded-full bg-emerald-300/80 shrink-0" />
+                        {bullet}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 border-t border-white/[0.06] pt-4">
+                    {exp.tech.map((technology) => <span key={technology} className="text-xs text-white/65" style={{ fontFamily: "JetBrains Mono, monospace" }}>{technology}</span>)}
+                  </div>
+                  <p className="mt-3 text-xs text-emerald-300" style={{ fontFamily: "JetBrains Mono, monospace" }}>{exp.highlight}</p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="size-1.5 rounded-full bg-green-400/80" />
-                  <span
-                    className="text-xs text-emerald-300"
-                    style={{ fontFamily: "JetBrains Mono, monospace" }}
-                  >
-                    {current.highlight}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </FadeIn>
+              </article>
+            </FadeIn>
+          ))}
         </div>
       </div>
     </section>
@@ -1005,174 +954,86 @@ function Experience() {
 // ─── Projects ────────────────────────────────────────────────────────────────
 
 function Projects() {
-  const [expanded, setExpanded] = useState<string | null>(null);
+  const featuredProjects = FEATURED_PROJECT_IDS.map((id) => PROJECTS.find((project) => project.id === id)!).filter(Boolean);
+  const additionalProjects = PROJECTS.filter((project) => !FEATURED_PROJECT_IDS.includes(project.id));
 
   return (
-    <section id="projects" className="relative py-28 border-t border-white/[0.05]">
+    <section id="projects" className="relative py-20 sm:py-24 border-t border-white/[0.05]">
       <SectionArtwork tone="amber" placement="low-right" />
       <div className="relative z-10 max-w-6xl mx-auto px-6">
         <FadeIn>
           <SectionLabel>Projects</SectionLabel>
           <h2
-            className="section-heading text-4xl sm:text-[42px] lg:text-5xl font-bold tracking-tight mb-8"
+            className="section-heading text-3xl sm:text-4xl font-bold tracking-tight mb-3"
             style={{ fontFamily: "Onest, sans-serif" }}
           >
-            What I've shipped.
+            Selected work, built to solve real problems.
           </h2>
+          <p className="max-w-2xl text-muted-foreground leading-relaxed mb-8" style={{ fontFamily: "DM Sans, sans-serif" }}>
+            AI applications, data tools, and workflow automation, with the systems behind each one in view.
+          </p>
+          <a href="https://github.com/gauravbhati2099" target="_blank" rel="noopener noreferrer" className="project-profile-link">
+            <Github size={16} aria-hidden="true" /> Browse project repositories <ArrowUpRight size={14} aria-hidden="true" />
+          </a>
         </FadeIn>
 
-        <SpriteLane scene="garden" />
-
-        <div className="space-y-2.5">
-          {PROJECTS.map((project, i) => {
-            const isOpen = expanded === project.id;
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {featuredProjects.map((project, index) => {
+            const flow = project.flow ?? [];
             return (
-              <FadeIn key={project.id} delay={i * 0.04}>
-                <div className="border border-white/[0.07] rounded-xl overflow-hidden bg-white/[0.01] hover:bg-white/[0.02] transition-colors">
-                  <button
-                    onClick={() => setExpanded(isOpen ? null : project.id)}
-                    data-tooltip={`${isOpen ? "Collapse" : "Expand"} ${project.title} details.`}
-                    className="w-full text-left p-5 sm:p-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-green-300"
-                    aria-expanded={isOpen}
-                    aria-controls={`${project.id}-details`}
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-3 mb-2">
-                          <motion.span
-                            className="project-diamond project-diamond-collect"
-                            aria-hidden="true"
-                            initial={{ opacity: 0, y: -18, scale: 0.45, rotate: -35 }}
-                            whileInView={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
-                            viewport={{ once: true, amount: 0.8 }}
-                            transition={{ type: "spring", stiffness: 240, damping: 14, delay: Math.min(i * 0.035, 0.24) }}
-                          />
-                          <span
-                            className="text-xs border border-white/[0.06] px-2 py-0.5 rounded text-muted-foreground/60"
-                            style={{ fontFamily: "JetBrains Mono, monospace" }}
-                          >
-                            {project.category}
-                          </span>
-                        </div>
-                        <h3
-                          className="text-base sm:text-lg font-semibold text-foreground"
-                          style={{ fontFamily: "Onest, sans-serif" }}
-                        >
-                          {project.title}
-                        </h3>
-                        <p
-                          className="text-sm text-muted-foreground mt-1"
-                          style={{ fontFamily: "DM Sans, sans-serif" }}
-                        >
-                          {project.tagline}
-                        </p>
-                      </div>
-                      <ChevronDown
-                        size={15}
-                        className={`text-muted-foreground/60 mt-1 shrink-0 transition-transform duration-300 ${
-                          isOpen ? "rotate-180" : ""
-                        }`}
-                      />
-                    </div>
-                  </button>
-
-                  <div
-                    id={`${project.id}-details`}
-                    aria-hidden={!isOpen}
-                    className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                      isOpen ? "max-h-[680px]" : "max-h-0"
-                    }`}
-                  >
-                    <div className="px-5 sm:px-6 pb-6 pt-5 border-t border-white/[0.05]">
-                      <div className="grid sm:grid-cols-2 gap-6 mb-6">
-                        <div>
-                          <p
-                            className="text-xs text-muted-foreground/50 mb-2 uppercase tracking-widest"
-                            style={{ fontFamily: "JetBrains Mono, monospace" }}
-                          >
-                            Overview
-                          </p>
-                          <p
-                            className="text-sm text-muted-foreground leading-relaxed"
-                            style={{ fontFamily: "DM Sans, sans-serif" }}
-                          >
-                            {project.description}
-                          </p>
-                        </div>
-                        <div className="space-y-4">
-                          <div>
-                            <p
-                              className="text-xs text-muted-foreground/50 mb-2 uppercase tracking-widest"
-                              style={{ fontFamily: "JetBrains Mono, monospace" }}
-                            >
-                              Problem
-                            </p>
-                            <p
-                              className="text-sm text-muted-foreground"
-                              style={{ fontFamily: "DM Sans, sans-serif" }}
-                            >
-                              {project.problem}
-                            </p>
-                          </div>
-                          <div>
-                            <p
-                              className="text-xs text-muted-foreground/50 mb-2 uppercase tracking-widest"
-                              style={{ fontFamily: "JetBrains Mono, monospace" }}
-                            >
-                              Solution
-                            </p>
-                            <p
-                              className="text-sm text-muted-foreground"
-                              style={{ fontFamily: "DM Sans, sans-serif" }}
-                            >
-                              {project.solution}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="flex flex-wrap items-center justify-between gap-4 pt-5 border-t border-white/[0.04]">
-                        <div className="flex flex-wrap gap-2">
-                          {project.tech.map((t) => (
-                            <span
-                              key={t}
-                              className="text-xs px-2 py-1 bg-white/[0.03] border border-white/[0.06] rounded text-muted-foreground"
-                              style={{ fontFamily: "JetBrains Mono, monospace" }}
-                            >
-                              {t}
-                            </span>
-                          ))}
-                        </div>
-                        <div className="flex flex-wrap gap-4">
-                          {project.metrics.map((m) => (
-                            <span
-                              key={m}
-                              className="text-sm text-emerald-300"
-                              style={{ fontFamily: "JetBrains Mono, monospace" }}
-                            >
-                              {m}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      <a
-                        href="https://github.com/gauravbhati2099"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 mt-4 text-xs text-muted-foreground hover:text-foreground transition-colors"
-                        style={{ fontFamily: "DM Sans, sans-serif" }}
-                      >
-                        <Github size={17} />
-                        View source on GitHub
-                        <ArrowUpRight size={11} />
-                      </a>
-                    </div>
+            <FadeIn key={project.id} delay={index * 0.05}>
+              <article className="project-case h-full" aria-labelledby={`${project.id}-title`}>
+                <div className={`project-case-art project-case-art-${project.id}`} aria-hidden="true" />
+                <div className="project-case-content">
+                  <div className="project-case-meta">
+                    <span className="project-diamond" aria-hidden="true" />
+                    <span>{project.category}</span>
                   </div>
+                  <h3 id={`${project.id}-title`} className="project-case-title" style={{ fontFamily: "Onest, sans-serif" }}>{project.title}</h3>
+                  <p className="project-case-tagline">{project.tagline}</p>
+                  <p className="project-case-description">{project.description}</p>
+                  <div className="project-flow" aria-label={`${project.title} implementation flow`}>
+                    {flow.map((step, stepIndex) => (
+                      <span key={step} className="project-flow-step">
+                        {step}
+                        {stepIndex < flow.length - 1 && <ChevronRight size={13} aria-hidden="true" />}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="project-case-detail">
+                    <h4>Implementation</h4>
+                    <p>{project.solution}</p>
+                  </div>
+                  <div className="project-case-detail">
+                    <h4>Build notes</h4>
+                    <ul>{project.metrics.map((note) => <li key={note}>{note}</li>)}</ul>
+                  </div>
+                  <ul className="project-case-tech" aria-label={`${project.title} technologies`}>
+                    {project.tech.slice(0, 5).map((technology) => <li key={technology}>{technology}</li>)}
+                  </ul>
+                  {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="project-case-link"><Github size={16} aria-hidden="true" /> View repository <ArrowUpRight size={14} aria-hidden="true" /></a>}
                 </div>
-              </FadeIn>
+              </article>
+            </FadeIn>
             );
           })}
+        </div>
+
+        <div className="mt-14">
+          <h3 className="mb-5 text-xl font-bold text-foreground" style={{ fontFamily: "Onest, sans-serif" }}>More projects</h3>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {additionalProjects.map((project) => (
+              <article key={project.id} className="project-brief">
+                <p className="project-brief-category">{project.category}</p>
+                <h4 style={{ fontFamily: "Onest, sans-serif" }}>{project.title}</h4>
+                <p>{project.tagline}</p>
+                <p className="project-brief-description">{project.description}</p>
+                <ul className="project-case-tech" aria-label={`${project.title} technologies`}>
+                  {project.tech.slice(0, 5).map((technology) => <li key={technology}>{technology}</li>)}
+                </ul>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -1194,20 +1055,13 @@ function ArchNode({
 }) {
   return (
     <div
-      className={`flex flex-col items-center justify-center text-center min-w-[120px] px-4 py-3 rounded-xl border transition-colors ${
-        featured
-          ? "border-white/[0.16] bg-white/[0.05] text-foreground"
-          : "border-white/[0.07] bg-white/[0.015] text-foreground/75"
-      }`}
+      className={`architecture-node ${featured ? "architecture-node-featured" : ""}`}
     >
-      <Icon size={18} className={featured ? "mb-2 text-cyan-300" : "mb-2 text-violet-200/75"} />
-      <div className="text-sm font-semibold leading-tight" style={{ fontFamily: "Onest, sans-serif" }}>
+      <Icon size={18} aria-hidden="true" />
+      <div className="architecture-node-label" style={{ fontFamily: "Onest, sans-serif" }}>
         {label}
       </div>
-      <div
-        className="text-xs text-muted-foreground mt-0.5 leading-tight"
-        style={{ fontFamily: "JetBrains Mono, monospace" }}
-      >
+      <div className="architecture-node-sublabel" style={{ fontFamily: "JetBrains Mono, monospace" }}>
         {sublabel}
       </div>
     </div>
@@ -1216,14 +1070,14 @@ function ArchNode({
 
 function Architecture() {
   return (
-    <section id="architecture" className="relative py-28 border-t border-white/[0.05]">
+    <section id="architecture" className="relative py-20 sm:py-24 border-t border-white/[0.05]">
       <SectionArtwork tone="violet" placement="low-left" />
       <div className="relative z-10 max-w-6xl mx-auto px-6">
         <FadeIn>
           <SectionLabel>Architecture</SectionLabel>
           <div className="flex flex-wrap items-end justify-between gap-6 mb-7">
             <h2
-              className="section-heading text-4xl sm:text-[42px] lg:text-5xl font-bold tracking-tight"
+              className="section-heading text-3xl sm:text-4xl font-bold tracking-tight"
               style={{ fontFamily: "Onest, sans-serif" }}
             >
               How the system connects.
@@ -1232,73 +1086,31 @@ function Architecture() {
               className="text-sm text-muted-foreground max-w-xs"
               style={{ fontFamily: "DM Sans, sans-serif" }}
             >
-              Inside the Intelligent Customer Support Platform — the architecture
-              that routes, remembers, and resolves.
+              A project-specific view of how a support request is routed, answered, and retained.
             </p>
           </div>
         </FadeIn>
 
-        <SpriteLane scene="village" />
-
         <FadeIn delay={0.12}>
-          <div className="border border-white/[0.07] rounded-2xl p-8 sm:p-12 bg-white/[0.01]">
-            {/* Flow diagram — horizontal scroll on small screens */}
-            <div className="overflow-x-auto pb-4">
-              <div className="flex items-stretch gap-0 min-w-[640px]">
-                {ARCH_FLOW.map((node, i) => (
-                  <div key={node.label} className="flex items-center flex-1">
-                    <div className="flex flex-col items-center flex-1">
-                      <span
-                        className="text-[10px] text-muted-foreground/40 mb-3 uppercase tracking-widest whitespace-nowrap"
-                        style={{ fontFamily: "JetBrains Mono, monospace" }}
-                      >
-                        {node.layer}
-                      </span>
-                      <ArchNode
-                        label={node.label}
-                        sublabel={node.sublabel}
-                        icon={node.icon}
-                        featured={node.featured}
-                      />
-                    </div>
-                    {i < ARCH_FLOW.length - 1 && (
-                      <div className="flex items-center px-1 mt-6">
-                        <div className="w-6 h-px bg-white/[0.1]" />
-                        <div
-                          className="w-0 h-0 border-t-4 border-b-4 border-l-4 border-t-transparent border-b-transparent border-l-white/[0.1]"
-                          style={{ borderTopWidth: 3, borderBottomWidth: 3, borderLeftWidth: 5 }}
-                        />
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Observability note */}
-            <div className="mt-6 flex items-center gap-2 text-xs text-muted-foreground/50" style={{ fontFamily: "JetBrains Mono, monospace" }}>
-              <span className="size-1.5 rounded-full bg-green-400/40" />
-              OpenTelemetry tracing active across all layers
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 mt-8 pt-8 border-t border-white/[0.05]">
-              {ARCH_STATS.map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <div
-                    className="text-2xl sm:text-3xl font-bold text-foreground"
-                    style={{ fontFamily: "Onest, sans-serif" }}
-                  >
-                    {stat.value}
-                  </div>
-                  <div
-                    className="text-xs text-muted-foreground mt-1"
-                    style={{ fontFamily: "JetBrains Mono, monospace" }}
-                  >
-                    {stat.label}
-                  </div>
-                </div>
+          <div className="architecture-panel">
+            <ol className="architecture-flow" aria-label="Intelligent Customer Support Platform request flow">
+              {ARCH_FLOW.map((node, index) => (
+                <li key={node.label} className="architecture-stage">
+                  <span className="architecture-step" aria-hidden="true">0{index + 1}</span>
+                  <span className="architecture-layer">{node.layer}</span>
+                  <ArchNode label={node.label} sublabel={node.sublabel} icon={node.icon} featured={node.featured} />
+                </li>
               ))}
+            </ol>
+            <div className="architecture-note">
+              <span className="size-2 rounded-full bg-green-300" />
+              OpenTelemetry supports tracing across the workflow.
+            </div>
+            <div className="architecture-scope">
+              <p>Reported project scope</p>
+              <div>
+                {ARCH_STATS.map((stat) => <span key={stat.label}><strong>{stat.value}</strong>{stat.label}</span>)}
+              </div>
             </div>
           </div>
         </FadeIn>
@@ -1566,7 +1378,7 @@ function MiniDinoGame() {
         ctx.fillStyle = "#7fc84d"; ctx.fillRect(0, ground, width, 8);
       }
       game.vy += 1080 * dt; game.y = Math.min(ground - heroHeight, game.y + game.vy * dt);
-      if (game.y >= ground - heroHeight) { game.vy = 0; game.jumps = 0; }
+      if (game.y >= ground - heroHeight && game.vy >= 0) { game.vy = 0; game.jumps = 0; }
       obstacles.forEach((obstacle) => { obstacle.x -= game.speed * dt;
         const image = obstacle.kind === 0 ? assets.mushroom : obstacle.kind === 1 ? assets.rock : assets.crate;
         if (image.complete && image.naturalWidth) ctx.drawImage(image, obstacle.x, ground - obstacle.height + 7, obstacle.width, obstacle.height);
@@ -1657,7 +1469,7 @@ function MiniDinoGame() {
             <div className="flex items-center gap-4 text-xs font-bold tracking-wider text-white/90"><span>SCORE <b className="text-amber-200">{String(playing ? liveScore : score).padStart(5, "0")}</b></span><span className="inline-flex items-center gap-1.5"><Coins size={16} className="text-amber-300" />{String(coins).padStart(2, "0")}</span></div>
           </div>
           <div className="game-screen relative overflow-hidden rounded-xl border-4 border-[#243653]">
-            <canvas ref={canvasRef} tabIndex={0} onPointerDown={() => { canvasRef.current?.focus(); if (playing) jump(); }} onKeyDown={(event) => { if ((event.code === "Space" || event.code === "ArrowUp") && !event.repeat) { event.preventDefault(); jump(); } if (event.code === "KeyP" && !event.repeat) { event.preventDefault(); setPaused((value) => !value); } }} className="game-canvas block w-full h-64 sm:h-72 touch-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200" aria-keyshortcuts="Space ArrowUp P" data-tooltip="Sunny Land game — Space or ↑ to jump, P to pause. Collect gems and dodge obstacles." aria-label="Sunny Land pixel platform runner. Focus this game and press Space or Arrow Up to jump, P to pause, or tap the canvas. Collect gems and avoid obstacles." />
+            <canvas ref={canvasRef} tabIndex={0} onPointerDown={() => { canvasRef.current?.focus(); if (playing) jump(); }} onKeyDown={(event) => { if ((event.code === "Space" || event.code === "ArrowUp") && !event.repeat) { event.preventDefault(); jump(); } if (event.code === "KeyP" && !event.repeat) { event.preventDefault(); setPaused((value) => !value); } }} className="game-canvas block w-full h-64 sm:h-72 touch-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200" aria-keyshortcuts="Space ArrowUp P" data-tooltip="Sunny Land game — jump twice before landing, P to pause. Collect gems and dodge obstacles." aria-label="Sunny Land pixel platform runner. Focus this game and press Space or Arrow Up to jump twice before landing, P to pause, or tap the canvas. Collect gems and avoid obstacles." />
             {!playing && <div className="game-start-overlay absolute inset-0 flex flex-col items-center justify-center gap-3"><span className="game-start-kicker">GAURAV'S BONUS LEVEL</span><p className="game-overlay-label">{state.current.over ? `RUN OVER · SCORE ${String(score).padStart(5, "0")}` : "READY, PLAYER ONE?"}</p><button onClick={() => { setScore(0); setCoins(0); setLiveScore(0); state.current.over = false; state.current.initialized = false; setPaused(false); setRunId((id) => id + 1); setPlaying(true); requestAnimationFrame(() => canvasRef.current?.focus()); }} className="inline-flex min-h-12 items-center gap-2 rounded-lg border-b-4 border-[#a34c17] bg-[#ffca3a] px-6 py-3 text-sm font-black uppercase tracking-wide text-[#382514] shadow-lg transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"><Play size={18} />{state.current.over ? "Play again" : "Start game"}</button></div>}
             {playing && paused && <div className="absolute inset-0 flex items-center justify-center bg-slate-950/60"><span className="game-overlay-label rounded-lg border border-white/25 bg-slate-950/80 px-5 py-3">PAUSED · PRESS P TO RESUME</span></div>}
           </div>
@@ -1665,7 +1477,7 @@ function MiniDinoGame() {
             <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/85"><span>Best run <strong className="text-amber-200">{String(best).padStart(5, "0")}</strong></span><span className="inline-flex items-center gap-2"><Coins size={17} className="text-amber-300" />{bestCoins} coins in one run</span></div>
             <div className="flex flex-wrap gap-2"><button onClick={jump} disabled={!playing || paused} className="inline-flex min-h-11 items-center gap-2 rounded-lg border-b-4 border-[#a34c17] bg-[#ffca3a] px-5 text-sm font-black text-[#382514] disabled:opacity-45"><ChevronRight size={18} className="-rotate-90" />Jump</button>{playing && <button onClick={() => setPaused((value) => !value)} aria-pressed={paused} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-white/20 bg-slate-950/55 px-4 text-sm font-semibold text-white">{paused ? <Play size={16} /> : <Pause size={16} />}{paused ? "Resume" : "Pause"}</button>}<button onClick={toggleSound} aria-pressed={!muted} aria-label={muted ? "Enable platformer music and sound effects" : "Mute platformer music and sound effects"} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-white/20 bg-slate-950/55 px-4 text-sm font-semibold text-white">{muted ? <VolumeX size={17} /> : <Volume2 size={17} />}{muted ? "Audio off" : "Audio on"}</button><a href="#main-content" className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-white/20 px-4 text-sm font-semibold text-white/90 hover:bg-white/10"><Home size={17} />Exit</a></div>
           </div>
-          <p className="mt-3 text-sm text-white/65">Space or ↑ to jump · P to pause · tap the screen or Jump. Sound is off until enabled.</p>
+          <p className="mt-3 text-sm text-white/65">Space or ↑ to jump twice before landing · P to pause · tap the screen or Jump. Sound is off until enabled.</p>
         </div>
       </FadeIn></div>
     </section>
@@ -1707,8 +1519,8 @@ function Contact() {
               className="text-muted-foreground leading-relaxed max-w-sm mb-10"
               style={{ fontFamily: "DM Sans, sans-serif" }}
             >
-              Open to AI engineering roles, backend positions, and interesting
-              technical challenges. I respond within 24 hours.
+              For questions about AI systems, backend work, or this portfolio,
+              send me a message.
             </p>
             <div className="flex flex-col gap-4">
               {[
@@ -1873,9 +1685,9 @@ export default function App() {
       <Nav />
       <main id="main-content" tabIndex={-1}>
         <Hero />
-        <About />
-        <Experience />
         <Projects />
+        <Experience />
+        <Skills />
         <Architecture />
         <MiniDinoGame />
         <Contact />
