@@ -1344,7 +1344,7 @@ function MiniDinoGame() {
   const [muted, setMuted] = useState(true);
   const mutedRef = useRef(muted);
   const [runId, setRunId] = useState(0);
-  const state = useRef({ active: false, over: false, initialized: false, y: 0, vy: 0, x: 0, speed: 190, score: 0, coins: 0, world: 0, last: 0, next: 0, phase: 0, pattern: 0, cloud: 0, invuln: 0, obstacles: [] as Array<{ x: number; kind: number; width: number; height: number }>, pickups: [] as Array<{ x: number; y: number; taken: boolean }>, clouds: [] as Array<{ x: number; y: number }>, trees: [] as Array<{ x: number; size: number; kind: number }>, houses: [] as Array<{ x: number; size: number; kind: number }>, plants: [] as Array<{ x: number; size: number; kind: number }> });
+  const state = useRef({ active: false, over: false, initialized: false, y: 0, vy: 0, jumps: 0, x: 0, speed: 190, score: 0, coins: 0, world: 0, last: 0, next: 0, phase: 0, pattern: 0, cloud: 0, invuln: 0, obstacles: [] as Array<{ x: number; kind: number; width: number; height: number }>, pickups: [] as Array<{ x: number; y: number; taken: boolean }>, clouds: [] as Array<{ x: number; y: number }>, trees: [] as Array<{ x: number; size: number; kind: number }>, houses: [] as Array<{ x: number; size: number; kind: number }>, plants: [] as Array<{ x: number; size: number; kind: number }> });
   const sound = useRef<AudioContext | null>(null);
   const music = useRef<HTMLAudioElement | null>(null);
 
@@ -1431,7 +1431,7 @@ function MiniDinoGame() {
       bush: loadImage("/game/sunnyland/environment/Props/bush.png"),
     };
     if (!game.initialized) {
-      game.y = ground - heroHeight; game.x = width + 50; game.vy = 0; game.speed = 190; game.score = 0; game.coins = 0; game.world = 0; game.over = false; game.last = 0; game.next = 2.5; game.phase = 0; game.invuln = 0;
+      game.y = ground - heroHeight; game.x = width + 50; game.vy = 0; game.jumps = 0; game.speed = 190; game.score = 0; game.coins = 0; game.world = 0; game.over = false; game.last = 0; game.next = 2.5; game.phase = 0; game.invuln = 0;
       game.obstacles = []; game.pickups = []; game.trees = [{ x: width * .13, size: .9, kind: 0 }, { x: width * .37, size: 1.05, kind: 1 }, { x: width * .65, size: 1, kind: 0 }, { x: width * .91, size: .92, kind: 1 }, { x: width * 1.2, size: .85, kind: 0 }];
       game.houses = [{ x: width * .25, size: 1.15, kind: 0 }, { x: width * .7, size: 1.2, kind: 1 }, { x: width * 1.1, size: 1.05, kind: 2 }];
       game.plants = [{ x: width * .08, size: 1, kind: 0 }, { x: width * .53, size: .9, kind: 1 }, { x: width * .84, size: 1.1, kind: 0 }, { x: width * 1.15, size: .8, kind: 1 }];
@@ -1566,6 +1566,7 @@ function MiniDinoGame() {
         ctx.fillStyle = "#7fc84d"; ctx.fillRect(0, ground, width, 8);
       }
       game.vy += 1080 * dt; game.y = Math.min(ground - heroHeight, game.y + game.vy * dt);
+      if (game.y >= ground - heroHeight) { game.vy = 0; game.jumps = 0; }
       obstacles.forEach((obstacle) => { obstacle.x -= game.speed * dt;
         const image = obstacle.kind === 0 ? assets.mushroom : obstacle.kind === 1 ? assets.rock : assets.crate;
         if (image.complete && image.naturalWidth) ctx.drawImage(image, obstacle.x, ground - obstacle.height + 7, obstacle.width, obstacle.height);
@@ -1605,8 +1606,9 @@ function MiniDinoGame() {
     const canvas = canvasRef.current;
     const height = canvas?.clientHeight ?? 288;
     const ground = Math.round(height * .78);
-    if (playing && !paused && game.y >= ground - 48 - 2) {
+    if (playing && !paused && game.jumps < 2) {
       game.vy = -430;
+      game.jumps += 1;
       playTone(560, .11);
     }
   };
@@ -1655,7 +1657,7 @@ function MiniDinoGame() {
             <div className="flex items-center gap-4 text-xs font-bold tracking-wider text-white/90"><span>SCORE <b className="text-amber-200">{String(playing ? liveScore : score).padStart(5, "0")}</b></span><span className="inline-flex items-center gap-1.5"><Coins size={16} className="text-amber-300" />{String(coins).padStart(2, "0")}</span></div>
           </div>
           <div className="game-screen relative overflow-hidden rounded-xl border-4 border-[#243653]">
-            <canvas ref={canvasRef} tabIndex={0} onPointerDown={() => { canvasRef.current?.focus(); if (playing) jump(); }} onKeyDown={(event) => { if (event.code === "Space" || event.code === "ArrowUp") { event.preventDefault(); jump(); } if (event.code === "KeyP" && !event.repeat) { event.preventDefault(); setPaused((value) => !value); } }} className="game-canvas block w-full h-64 sm:h-72 touch-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200" aria-keyshortcuts="Space ArrowUp P" data-tooltip="Sunny Land game — Space or ↑ to jump, P to pause. Collect gems and dodge obstacles." aria-label="Sunny Land pixel platform runner. Focus this game and press Space or Arrow Up to jump, P to pause, or tap the canvas. Collect gems and avoid obstacles." />
+            <canvas ref={canvasRef} tabIndex={0} onPointerDown={() => { canvasRef.current?.focus(); if (playing) jump(); }} onKeyDown={(event) => { if ((event.code === "Space" || event.code === "ArrowUp") && !event.repeat) { event.preventDefault(); jump(); } if (event.code === "KeyP" && !event.repeat) { event.preventDefault(); setPaused((value) => !value); } }} className="game-canvas block w-full h-64 sm:h-72 touch-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200" aria-keyshortcuts="Space ArrowUp P" data-tooltip="Sunny Land game — Space or ↑ to jump, P to pause. Collect gems and dodge obstacles." aria-label="Sunny Land pixel platform runner. Focus this game and press Space or Arrow Up to jump, P to pause, or tap the canvas. Collect gems and avoid obstacles." />
             {!playing && <div className="game-start-overlay absolute inset-0 flex flex-col items-center justify-center gap-3"><span className="game-start-kicker">GAURAV'S BONUS LEVEL</span><p className="game-overlay-label">{state.current.over ? `RUN OVER · SCORE ${String(score).padStart(5, "0")}` : "READY, PLAYER ONE?"}</p><button onClick={() => { setScore(0); setCoins(0); setLiveScore(0); state.current.over = false; state.current.initialized = false; setPaused(false); setRunId((id) => id + 1); setPlaying(true); requestAnimationFrame(() => canvasRef.current?.focus()); }} className="inline-flex min-h-12 items-center gap-2 rounded-lg border-b-4 border-[#a34c17] bg-[#ffca3a] px-6 py-3 text-sm font-black uppercase tracking-wide text-[#382514] shadow-lg transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"><Play size={18} />{state.current.over ? "Play again" : "Start game"}</button></div>}
             {playing && paused && <div className="absolute inset-0 flex items-center justify-center bg-slate-950/60"><span className="game-overlay-label rounded-lg border border-white/25 bg-slate-950/80 px-5 py-3">PAUSED · PRESS P TO RESUME</span></div>}
           </div>
